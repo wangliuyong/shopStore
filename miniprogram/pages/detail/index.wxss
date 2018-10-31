@@ -1,0 +1,7 @@
+/**index.wxss**/
+
+view.pay {
+  bottom: 0;
+  top:50%;
+  width: 100%;
+}

@@ -1,0 +1,36 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="detail">
+    <image style="width: 100%; background-color: #eeeeee;"  src="{{good.picture}}"></image>
+    <van-panel title="{{good.name}}" desc="{{good.goodintro}}" status="热销中">
+      <view>商品简介:dsdsd</view>
+      <view>￥{{good.price}}</view>
+      <view>剩余数量{{good.count}}</view>
+    </van-panel>
+  </view>
+  <view>
+    <van-goods-action>
+      <van-goods-action-icon icon="chat" text="客服" bind:click="onClickIcon" />
+      <van-goods-action-icon icon="cart" text="购物车" bind:click="onClickToCar" />
+      <van-goods-action-button text="加入购物车" type="warning" bind:click="onShowPay" />
+      <van-goods-action-button text="立即购买" bind:click="onShowPay" />
+    </van-goods-action>
+  </view>
+  <!--弹出祝福层-->
+  <van-popup show="{{show}}" bind:close="onClose" custom-class="pay">
+  <view>价格:{{good.price}}</view>
+  <view>库存:{{good.count}}</view>
+  <view>购买数量:<van-stepper value="{{ selecCount }}" bind:change="countChange" /></view>
+    <van-goods-action>
+      <van-goods-action-button
+        text="加入购物车"
+        type="warning"
+        bind:click="addCar"
+      />
+      <van-goods-action-button
+        text="立即购买"
+        bind:click="toPay"
+      />
+    </van-goods-action>
+  </van-popup>
+</view>

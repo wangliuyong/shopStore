@@ -1,0 +1,42 @@
+<!-- index.wxml -->
+<view class="container">
+  <view>
+    <van-search value="{{ search }}" placeholder="请输入搜索关键词" show-action bind:search="onSearch" bind:cancel="onCancel" />
+  </view>
+  <view>
+    <van-tabs active="{{ active }}" bind:click="clickTab">
+      <van-tab title="全部商品">
+        <van-row>
+          <van-col span="12" wx:for="{{goods}}">
+            <view bindtap="clickGood" id="{{item.id}}">
+              <image style="width: 100%; background-color: #eeeeee;"  src="{{item.picture}}"></image>
+              <view>￥{{item.price}}</view>
+              <view>剩余:{{item.count}}</view>
+            </view>
+          </van-col>
+        </van-row>
+      </van-tab>
+      <van-tab title="杂志订阅">
+        <van-row>
+          <van-col span="12" wx:for="{{magazine}}">
+            <view bindtap="clickGood" id="{{item.id}}">
+              <image style="width: 100%; background-color: #eeeeee;"  src="{{item.picture}}"></image>
+              <view>￥{{item.price}}</view>
+              <view>剩余:{{item.count}}</view>
+            </view>   
+          </van-col>
+        </van-row>
+      </van-tab>
+      <van-tab title="水果蔬菜">水果</van-tab>
+      <van-tab title="日常用品">日常</van-tab>
+    </van-tabs>
+  </view>
+  <!-- <swiper class="swiper" indicator-dots="true" autoplay="true" interval="2000" duration="500">
+  <block wx:for="{{slideShow}}" wx:key="*this">
+    <swiper-item>
+      <image mode="scaleToFill" src="{{item.picture}}" class="slide-image"/>
+    </swiper-item>
+  </block>
+  </swiper> -->
+  <view></view>
+</view>
