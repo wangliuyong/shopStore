@@ -1,6 +1,6 @@
 <!-- index.wxml -->
 <view class="container">
-  <van-cell-group>
+  <van-cell-group bind:tap="toAdd">
     <van-cell title="+添加收货地址" icon="location" is-link />
   </van-cell-group>
   <van-card num="{{order.selectCount}}" price="{{order.good.price}}" title="{{order.good.name}}" thumb="{{ order.good.picture }}">
