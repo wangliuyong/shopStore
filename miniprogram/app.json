@@ -1,14 +1,14 @@
 {
   "cloud": true,
   "pages": [
-    "pages/user/index",
     "pages/index/index",
+    "pages/shopCar/index",
+    "pages/user/index",
     "pages/address/index",
     "pages/address/addto/index",
     "pages/order/index",
     "pages/orderCenter/index",
     "pages/detail/index",
-    "pages/shopCar/index",
     "pages/pay/index"
     
   ],

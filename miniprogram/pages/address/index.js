@@ -11,7 +11,7 @@ Page({
     
   },
   onShow:function(){
-     
+     //发送请求,获取用户联系人地址列表
   },
   addrss(){
     wx.navigateTo({
