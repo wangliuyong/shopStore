@@ -1,16 +1,21 @@
+
 //index.js
-const app = getApp()
+//获取应用实例
+var app = getApp()
 
 Page({
   data: {
-    avatarUrl: './user-unlogin.png',
-    userInfo: {},
-    logged: false,
-    takeSession: false,
-    requestResult: ''
+    allAddress: [],//地址列表
   },
-  onLoad: function(option) {
-    console.log(option)
+  onLoad: function () {
     
   },
+  onShow:function(){
+     
+  },
+  addrss(){
+    wx.navigateTo({
+        url: '/pages/address/addto/index'
+      })
+  }
 })

@@ -8,15 +8,19 @@ const app = getApp()
 
 Page({
   data: {
-    //
     order:{
       good:{},
       selectCount:""
     },
-    message:""
+    message:"",
+    contacts:{},
+    address:"",
+    sumPrice:0,
+    leaveMessage:""
   },
   onLoad: function(option) {
-    option={id:1,count:2}//假数据,调试完就删
+    //option={id:1,count:2}//假数据,调试完就删
+    //console.log('-------111-----------------')
     console.log(option)
     console.log(goods)
     let good=goods.filter((item)=>{
@@ -29,115 +33,91 @@ Page({
      "order.good":good[0],
      "order.selectCount":option.count
     })
+    //console.log('-------2------------------')
+    //console.log('sumPrice',this.data.order.good.price*this.data.order.selectCount)
+    this.setData({sumPrice:this.data.order.good.price*this.data.order.selectCount*100})
+
 
   },
   onShow(){
-    console.log('order')
+    let that=this
+    console.log('ordershow')
+    wx.getStorage({
+      key: 'contacts',
+      success (res) {
+        console.log('res',res.data)
+        that.setData({
+          contacts:res.data,
+          address:res.data.contact+res.data.telephone+res.data.area
+        })
+      } 
+    })
   },
   change(e){
-    console.log("e",e,"this data",this.data.message)
     this.setData({
       message:e.detail
     })
+    console.log("e",e,"this data",this.data.message)
   },
   onSubmit(){
-    this.payRuqest(100)
+    let that =this
+    console.log("this.data.order.good",this.data.order.good)
+    let needPay=this.data.order.good.price*this.data.order.selectCount*100
+    let openid=app.globalData.openid
+
+    console.log('needPay',needPay,'openid',openid)
+    payRuqest(needPay,openid,(data)=>{//假数据
+      console.log('res',data)
+      if(data==1){
+        //支付成功
+      //支付成功之后发送请求存入数据库
+      wx.getStorage({
+        key: 'contacts',
+        success (res) {
+          
+        } 
+      })
+      console.log('存入数据库')
+      let createAt=new Date().toLocaleDateString().split("/").join("-")+' '+new Date().toLocaleTimeString().slice(2),
+                id=new Date().getTime()
+      wx.setStorage({
+        key:"orderSuccess",
+        data:{
+          openid:app.globalData.openid,
+          good_id:that.data.order.good.id,
+          orderStatus:"havePay",
+          havePay:that.data.sumPrice,
+          subCount:that.data.order.selectCount,
+          leaveMessage:this.data.message,
+          contact:this.data.contacts,
+          createAt,
+          id
+        }
+      })
+      }else{
+        console.log('支付失败')
+        let createAt=new Date().toLocaleDateString().split("/").join("-")+' '+new Date().toLocaleTimeString().slice(2),
+                id=new Date().getTime()
+        wx.setStorage({
+          key:"orderFail",
+          data:{
+            openid:app.globalData.openid,
+            good_id:that.data.order.good.id,
+            orderStatus:"waitPay",
+            havePay:that.data.sumPrice,
+            subCount:that.data.order.selectCount,
+            leaveMessage:this.data.message,
+            contact:this.data.contacts,
+            createAt,
+            id
+          }
+        })
+      }
+    })
   },
   toAdd(){
     wx.navigateTo({
       url: '/pages/address/index'
     })
-  },
-  //支付
-  payRuqest(needPay) {
-    var _this=this;
-    let tradeNo = new Date().getTime();
-    let openid = ''
-    //调用云函数
-    wx.cloud.callFunction({
-      name: 'login',
-      data: {}
-    }).then((res) => {
-      openid = res.result.openid
-      sendPay();
-    })
-
-    //发送支付请求
-    function sendPay() {
-      //向后端请求数据
-      wx.request({
-        url: 'https://xcx.ioobot.com/payinfo',
-        data: {
-          needPay,
-          openid,
-          tradeNo
-        },
-        header: {
-          'content-type': 'application/json'
-        },
-        success(res) {
-          if (res.data) {
-            requestPayment(res)
-          }
-        },
-        fail(res) {
-          wx.showToast({
-            title: '支付失败'
-          })
-        }
-      })
-    }
-    //调起支付
-    function requestPayment(res) {
-      let {
-        nonceStr,
-        paySign,
-        timeStamp,
-        signType
-      } = res.data;
-      let package1 = res.data.package;
-      //package是严格模式下的保留字
-      wx.requestPayment({
-        'timeStamp': timeStamp,
-        'nonceStr': nonceStr,
-        'package': package1,
-        'signType': signType,
-        'paySign': paySign,
-        'success': function (res) {
-          wx.showToast({
-            title: '支付成功'
-          })
-          //支付成功之将预定成功的杂志数据发送到后端      
-          _this.setData({
-            "order.orderStatus":"finishPay"
-          })
-          _this.createOrder(_this.data.order)
-
-          console.log(_this.data.order)
-
-          setTimeout(()=>{
-            wx.switchTab({
-              url: '/pages/my/my'
-            })
-            app.globalData.pay=true
-          },1000)
-        },
-        'fail': function (res) {
-          wx.showToast({
-            title: '支付失败'
-          })
-
-          _this.createOrder(_this.data.order)
-          console.log(_this.data.order)
-          setTimeout(()=>{
-            wx.switchTab({
-              url: '/pages/my/my?pay=false'
-            })
-            app.globalData.pay=false
-          },1000)
-        },
-        'complete': function (res) {}
-      })
-    }
   }
 })

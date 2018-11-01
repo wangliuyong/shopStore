@@ -7,7 +7,7 @@
     <van-tabs active="{{ active }}" bind:click="clickTab">
       <van-tab title="全部商品">
         <van-row>
-          <van-col span="12" wx:for="{{goods}}">
+          <van-col span="12" wx:for="{{goods}}" wx:key="{{index}}">
             <view bindtap="clickGood" id="{{item.id}}">
               <image style="width: 100%; background-color: #eeeeee;"  src="{{item.picture}}"></image>
               <view>￥{{item.price}}</view>
@@ -18,7 +18,7 @@
       </van-tab>
       <van-tab title="杂志订阅">
         <van-row>
-          <van-col span="12" wx:for="{{magazine}}">
+          <van-col span="12" wx:for="{{magazine}}" wx:key="{{index}}">
             <view bindtap="clickGood" id="{{item.id}}">
               <image style="width: 100%; background-color: #eeeeee;"  src="{{item.picture}}"></image>
               <view>￥{{item.price}}</view>

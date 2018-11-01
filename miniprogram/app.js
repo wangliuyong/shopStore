@@ -10,6 +10,14 @@ App({
       })
     }
 
-    this.globalData = {}
+    wx.cloud.callFunction({
+      name: 'login',
+      data: {}
+    }).then((res) => {
+      this.globalData.openid = res.result.openid
+    })
+  },
+  globalData:{
+    openid:""
   }
 })

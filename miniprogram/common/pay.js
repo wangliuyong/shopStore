@@ -1,10 +1,10 @@
 import configs from '../configs'
 let {config}=configs
 
-var payRuqest=function(needPay,openid) {
+var payRuqest=function(needPay,openid,fn) {
     let tradeNo = new Date().getTime();
       //向后端请求数据
-     return wx.request({
+      wx.request({
         url: config.HTTP_PAY_URL,
         data: {
           needPay,
@@ -24,7 +24,7 @@ var payRuqest=function(needPay,openid) {
             } = res.data;
             let package1 = res.data.package;
             //package是严格模式下的保留字
-            return wx.requestPayment({
+            wx.requestPayment({
               'timeStamp': timeStamp,
               'nonceStr': nonceStr,
               'package': package1,
@@ -32,11 +32,11 @@ var payRuqest=function(needPay,openid) {
               'paySign': paySign,
               'success': function (res) {
                 
-                return 1
+                fn(1)
               },
               'fail': function (res) {
                
-                return 0
+                fn(0)
               },
               'complete': function (res) {}
             })
@@ -45,7 +45,7 @@ var payRuqest=function(needPay,openid) {
         },
         fail(res) {
           
-          return 1
+          fn(0)
         }
       })
   }

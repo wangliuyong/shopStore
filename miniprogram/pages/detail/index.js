@@ -47,8 +47,26 @@ Page({
     })
   },
   addCar(){
+    let that=this
+    wx.setStorage({
+      key:"orderSuccess",
+      data:{
+        openid:app.globalData.openid,
+        good_id:that.data.good.id,
+        orderStatus:"waitPay",
+        havePay:that.data.sumPrice,
+        subCount:that.data.selectCount,
+        leaveMessage:this.data.message,
+        contact:this.data.contacts,
+        createAt,
+        id
+      }
+    })
+  },
+  onClickToCar(){
     wx.switchTab({
       url: '/pages/shopCar/index?id='+this.data.good.id+"&count="+this.data.selecCount
     })
   }
+
 })

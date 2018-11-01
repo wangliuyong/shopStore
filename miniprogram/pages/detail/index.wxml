@@ -16,7 +16,7 @@
       <van-goods-action-button text="立即购买" bind:click="onShowPay" />
     </van-goods-action>
   </view>
-  <!--弹出祝福层-->
+  <!--弹出层-->
   <van-popup show="{{show}}" bind:close="onClose" custom-class="pay">
   <view>价格:{{good.price}}</view>
   <view>库存:{{good.count}}</view>

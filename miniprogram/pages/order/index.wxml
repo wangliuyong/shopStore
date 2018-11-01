@@ -1,13 +1,19 @@
 <!-- index.wxml -->
 <view class="container">
+  
   <van-cell-group bind:tap="toAdd">
-    <van-cell title="+添加收货地址" icon="location" is-link />
+  <van-cell title="{{address}}" icon="location" is-link />
   </van-cell-group>
+
+ 
+
   <van-card num="{{order.selectCount}}" price="{{order.good.price}}" title="{{order.good.name}}" thumb="{{ order.good.picture }}">
     <view slot="footer">总计1件商品;合计:￥{{order.good.price*order.selectCount}}</view>
   </van-card>
+  
   <van-cell-group>
     <van-field value="{{ message }}" label="买家留言" type="textarea" placeholder="请输入留言" autosize border="{{ false }}" bind:change="change"/>
   </van-cell-group>
-    <van-submit-bar price="{{ 3050 }}" button-text="提交订单" bind:submit="onSubmit"/>
+
+  <van-submit-bar price="{{sumPrice}}" button-text="提交订单" bind:submit="onSubmit"/>
 </view>
