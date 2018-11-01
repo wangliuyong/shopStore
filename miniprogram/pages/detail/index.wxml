@@ -1,11 +1,11 @@
 <!--index.wxml-->
 <view class="container">
   <view class="detail">
-    <image style="width: 100%; background-color: #eeeeee;"  src="{{good.picture}}"></image>
-    <van-panel title="{{good.name}}" desc="{{good.goodintro}}" status="热销中">
-      <view>商品简介:dsdsd</view>
+    <image style="width: 100%; background-color: #eeeeee;"  src="{{good.img}}"></image>
+    <van-panel title="{{good.name}}" desc="{{good.intro}}" status="热销中">
+      <view>商品简介:{{good.intro}}</view>
       <view>￥{{good.price}}</view>
-      <view>剩余数量{{good.count}}</view>
+      <view>剩余数量{{good.stock}}</view>
     </van-panel>
   </view>
   <view>
@@ -19,7 +19,7 @@
   <!--弹出层-->
   <van-popup show="{{show}}" bind:close="onClose" custom-class="pay">
   <view>价格:{{good.price}}</view>
-  <view>库存:{{good.count}}</view>
+  <view>库存:{{good.stock}}</view>
   <view>购买数量:<van-stepper value="{{ selecCount }}" bind:change="countChange" /></view>
     <van-goods-action>
       <van-goods-action-button

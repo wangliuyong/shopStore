@@ -1,17 +1,18 @@
 <!-- index.wxml -->
 <view class="container">
-  <view>
+  <!-- <view>
     <van-search value="{{ search }}" placeholder="请输入搜索关键词" show-action bind:search="onSearch" bind:cancel="onCancel" />
-  </view>
-  <view>
+  </view> -->
+  <view class="goodWrap">
     <van-tabs active="{{ active }}" bind:click="clickTab">
       <van-tab title="全部商品">
         <van-row>
           <van-col span="12" wx:for="{{goods}}" wx:key="{{index}}">
-            <view bindtap="clickGood" id="{{item.id}}">
-              <image style="width: 100%; background-color: #eeeeee;"  src="{{item.picture}}"></image>
+            <view bindtap="clickGood" id="{{item.id}}" class="goodCard">
+              <image style="width: 100%; background-color: #eeeeee;"  src="{{item.img}}"></image>
+              <view>￥{{item.name}}</view>
               <view>￥{{item.price}}</view>
-              <view>剩余:{{item.count}}</view>
+              <view>剩余:{{item.stock}}</view>
             </view>
           </van-col>
         </van-row>
@@ -19,10 +20,11 @@
       <van-tab title="杂志订阅">
         <van-row>
           <van-col span="12" wx:for="{{magazine}}" wx:key="{{index}}">
-            <view bindtap="clickGood" id="{{item.id}}">
-              <image style="width: 100%; background-color: #eeeeee;"  src="{{item.picture}}"></image>
+            <view bindtap="clickGood" id="{{item.id}}" class="goodCard">
+              <image style="width: 100%; background-color: #eeeeee;"  src="{{item.img}}"></image>
+              <view>￥{{item.name}}</view>
               <view>￥{{item.price}}</view>
-              <view>剩余:{{item.count}}</view>
+              <view>剩余:{{item.stock}}</view>
             </view>   
           </van-col>
         </van-row>

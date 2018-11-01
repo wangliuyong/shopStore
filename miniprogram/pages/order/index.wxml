@@ -7,7 +7,7 @@
 
  
 
-  <van-card num="{{order.selectCount}}" price="{{order.good.price}}" title="{{order.good.name}}" thumb="{{ order.good.picture }}">
+  <van-card num="{{order.selectCount}}" price="{{order.good.price}}" title="{{order.good.name}}" thumb="{{ order.good.img }}">
     <view slot="footer">总计1件商品;合计:￥{{order.good.price*order.selectCount}}</view>
   </van-card>
   

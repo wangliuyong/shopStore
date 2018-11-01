@@ -26,7 +26,7 @@ Page({
     }); */
 
     let magazine=this.data.goods.filter((item)=>{
-      return item.sort=="magazine"
+      return item.category=="1"
     })
     console.log(magazine)
     this.setData({

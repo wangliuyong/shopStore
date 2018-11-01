@@ -13,7 +13,7 @@ Page({
   },
 
   onLoad: function(option) {
-    option.id=2//测试用,记得删除
+    //option.id=2//测试用,记得删除
     console.log("option",option)
    let good=goods.filter((item)=>{
      return item.id==option.id
@@ -48,20 +48,9 @@ Page({
   },
   addCar(){
     let that=this
-    wx.setStorage({
-      key:"orderSuccess",
-      data:{
-        openid:app.globalData.openid,
-        good_id:that.data.good.id,
-        orderStatus:"waitPay",
-        havePay:that.data.sumPrice,
-        subCount:that.data.selectCount,
-        leaveMessage:this.data.message,
-        contact:this.data.contacts,
-        createAt,
-        id
-      }
-    })
+    //发送请求存储的购物车
+    //发送的数据有
+    
   },
   onClickToCar(){
     wx.switchTab({
