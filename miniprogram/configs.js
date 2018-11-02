@@ -1,6 +1,6 @@
 var config={
     APPID:"wxc4831335ae194243",
-    HTTP_DATA_URL:'https://xcx.ioobot.com/graphql',
+    HTTP_DATA_URL:'http://localhost:3000/graphql',
     HTTP_PAY_URL:'https://xcx.ioobot.com/payinfo'
 }
 export default{

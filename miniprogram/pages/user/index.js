@@ -1,4 +1,11 @@
 //index.js
+import user from '../../common/user'
+
+let {
+  createUser,
+  getUserByOpenid
+} = user
+
 const app = getApp()
 
 Page({
@@ -10,7 +17,7 @@ Page({
     requestResult: ''
   },
 
-  onLoad: function() {
+  onLoad: function () {
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -18,27 +25,57 @@ Page({
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
           wx.getUserInfo({
             success: res => {
-              
               this.setData({
                 avatarUrl: res.userInfo.avatarUrl,
                 userInfo: res.userInfo
               })
+              getUserByOpenid(app.globalData.openid).then((e) => {
+                console.log('useropenid', e.data.user_by_props)
+                if (e.data.user_by_props.length!=0) {
+                  console.log('用户已经存在')
+                } else {
+                  let createdAt = new Date().toLocaleDateString().split("/").join("-") + ' ' + new Date().toLocaleTimeString().slice(2),
+                    openid = app.globalData.openid,
+                    username = res.userInfo.nickName
+                  let user = {
+                    createdAt,
+                    email: '1355498705@qq.com',
+                    openid:openid,
+                    password: '135549',
+                    telephone: '13222637947',
+                    updatedAt: '2019-12-11',
+                    userData_id: openid,
+                    username
+                  }
 
-              console.log(this.data)
+                  console.log('user',user)
+                  createUser(user).then((e) => {
+                    console.log('创建用户', e)
+                  })
+                } 
+              })
+              console.log(this.data)//
+
             }
           })
         }
       }
     })
   },
-  address(){
+  address() {
     wx.navigateTo({
       url: '/pages/address/index'
     })
   },
-  order(){
+  order() {
     wx.navigateTo({
       url: '/pages/orderCenter/index'
     })
+  },
+  /* getuser(e){
+    console.log('user',e)
+  } */
+  onShow() {
+
   }
 })

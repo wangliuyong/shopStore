@@ -1,6 +1,11 @@
 //index.js
 import img from '../../common/slide'
 import data from '../../data'
+import product from '../../common/goods'
+
+
+
+let {getProductByStatus}=product
 let {goods}=data
 
 let {getSlideImg}=img
@@ -16,22 +21,24 @@ Page({
     magazine:[]
   },
   onLoad: function() {
-    console.log(goods)
-    this.setData({
-      goods:goods
+    getProductByStatus("1").then((e)=>{
+      console.log('product',e.data.product_by_props)
+      this.setData({
+        goods:e.data.product_by_props
+      })
+      let magazine=this.data.goods.filter((item)=>{
+        //01水果 02杂志
+        return item.category=="02"
+      })
+      console.log(magazine)
+      this.setData({
+        magazine:magazine
+      })
     })
-
-    /* getSlideImg().then((e)=>{
-      console.log("slideImg",e)
-    }); */
-
-    let magazine=this.data.goods.filter((item)=>{
-      return item.category=="1"
-    })
-    console.log(magazine)
-    this.setData({
-      magazine:magazine
-    })
+    
+  },
+  onShow(){
+    
   },
   onSearch(e){
     console.log(e)

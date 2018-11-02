@@ -18,4 +18,6 @@
         <image src="../../images/ding.png"/>我的地址
         <text class="jump">〉</text>
     </view>
+
+    <!-- <button open-type="getUserInfo" bindgetuserinfo="getuser">ssss</button> -->
 </view>

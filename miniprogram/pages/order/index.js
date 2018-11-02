@@ -71,27 +71,25 @@ Page({
       if(data==1){
         //支付成功
       //支付成功之后发送请求存入数据库
-      wx.getStorage({
-        key: 'contacts',
-        success (res) {
-          
-        } 
-      })
       console.log('存入数据库')
-      let createAt=new Date().toLocaleDateString().split("/").join("-")+' '+new Date().toLocaleTimeString().slice(2),
+      let createdAt=new Date().toLocaleDateString().split("/").join("-")+' '+new Date().toLocaleTimeString().slice(2),
                 id=new Date().getTime()
       wx.setStorage({
         key:"orderSuccess",
         data:{
-          openid:app.globalData.openid,
-          good_id:that.data.order.good.id,
-          orderStatus:"havePay",
-          havePay:that.data.sumPrice,
-          subCount:that.data.order.selectCount,
-          leaveMessage:this.data.message,
-          contact:this.data.contacts,
-          createAt,
-          id
+          id,
+          user_id,
+          product_id,
+          productName,
+          productImg,
+          productPrice,
+          unit,
+          count,
+          productPay,
+          orderPay,
+          remark,
+          createdAt,
+          updatedAt
         }
       })
       }else{

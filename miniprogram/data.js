@@ -11,7 +11,7 @@ let good1 = {
     intro: "带你领略编程大家的世界",
     stock: 100,
     unit: [500, 200, 100],
-    status: "-1",
+    status: "1",
     createdAt: "2018-11-12 11:11:11",
     updatedAt: "2018-11-12 11:11:11"
 },
@@ -24,7 +24,7 @@ good2={
     intro: "产于深山绝对新鲜",
     stock: 100,
     unit: [500, 200, 100],
-    status: "-1",
+    status: "1",
     createdAt: "2018-11-12 11:11:11",
     updatedAt: "2018-11-12 11:11:11"
 },
@@ -37,7 +37,7 @@ good3={
     intro: "带你领略编程大家的世界",
     stock: 100,
     unit: [500, 200, 100],
-    status: "-1",
+    status: "1",
     createdAt: "2018-11-12 11:11:11",
     updatedAt: "2018-11-12 11:11:11"
 },
@@ -50,7 +50,7 @@ good4={
     intro: "来自于菲律宾的大香蕉",
     stock: 100,
     unit: [500, 200, 100],
-    status: "-1",
+    status: "1",
     createdAt: "2018-11-12 11:11:11",
     updatedAt: "2018-11-12 11:11:11"
 }
@@ -67,7 +67,7 @@ export default{
 }
 
 
-let order={
+/* let order={
     user_id:openid,
     productTotalPay:20,
     orderTotalPay:100,
@@ -80,4 +80,4 @@ let order={
     deliveryTime,
     createdAt,
     updatedAt
-}
+} */

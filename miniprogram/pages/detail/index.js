@@ -1,5 +1,8 @@
 //index.js
 import data from '../../data'
+import product from '../../common/goods'
+
+let {getProductById}=product
 let {goods}=data
 
 const app = getApp()
@@ -13,15 +16,16 @@ Page({
   },
 
   onLoad: function(option) {
+
+    getProductById(option.id).then((e)=>{
+      console.log('goodByid',e.data.product_by_id)
+      console.log("option",option)
+      this.setData({
+        good:e.data.product_by_id
+      })
+    })
     //option.id=2//测试用,记得删除
-    console.log("option",option)
-   let good=goods.filter((item)=>{
-     return item.id==option.id
-   })
-   console.log("good",good)
-   this.setData({
-    good:good[0]
-   })
+    
   },
   onShow(){
     console.log('detail')
@@ -50,7 +54,11 @@ Page({
     let that=this
     //发送请求存储的购物车
     //发送的数据有
-    
+    wx.showToast({
+      title: '加入购物车成功',
+      icon: 'success',
+      duration: 1000
+    })
   },
   onClickToCar(){
     wx.switchTab({
