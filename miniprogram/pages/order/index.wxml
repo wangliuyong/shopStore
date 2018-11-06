@@ -2,10 +2,10 @@
 <view class="container">
   
   <van-cell-group bind:tap="toAdd">
-  <van-cell title="{{address}}" icon="location" is-link />
+  <van-cell title="{{defaultAddress.username+defaultAddress.telephone+defaultAddress.address+defaultAddress.province+defaultAddress.city+defaultAddress.area+defaultAddress.address}}" icon="location" is-link />
   </van-cell-group>
 
- 
+
 
   <van-card num="{{order.selectCount}}" price="{{order.good.price}}" title="{{order.good.name}}" thumb="{{ order.good.img }}">
     <view slot="footer">总计1件商品;合计:￥{{order.good.price*order.selectCount}}</view>

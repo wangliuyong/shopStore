@@ -1,12 +1,12 @@
 //index.js
 import img from '../../common/slide'
-import data from '../../data'
+//import data from '../../data'
 import product from '../../common/goods'
 
 
 
 let {getProductByStatus}=product
-let {goods}=data
+//let {goods}=data
 
 let {getSlideImg}=img
 const app = getApp()
@@ -18,24 +18,14 @@ Page({
     search:"",
     //伪造数据
     goods:[],
-    magazine:[]
+    magazine:[],
+    fruit:[],
+    allGoods:[]
   },
   onLoad: function() {
     getProductByStatus("1").then((e)=>{
-      console.log('product',e.data.product_by_props)
-      this.setData({
-        goods:e.data.product_by_props
-      })
-      let magazine=this.data.goods.filter((item)=>{
-        //01水果 02杂志
-        return item.category=="02"
-      })
-      console.log(magazine)
-      this.setData({
-        magazine:magazine
-      })
+      this.categoricalData(e);
     })
-    
   },
   onShow(){
     
@@ -53,5 +43,34 @@ Page({
     wx.navigateTo({
       url: '/pages/detail/index?id='+e.currentTarget.id
     }) 
+  },
+  //封装函数
+  categoricalData(e){
+    console.log('product',e.data.product_by_props)
+    let category=[];
+    e.data.product_by_props.map((item)=>{
+      category.push(item.category)
+    })
+    category=Array.from(new Set(category))
+    console.log("category",category)
+    let allGoods=[];
+
+    allGoods.push({
+      category:"所有果品",
+      goods:e.data.product_by_props
+    })
+    category.map((it)=>{
+      let hash={}
+      hash["category"]=it;
+      hash.goods=e.data.product_by_props.filter((item)=>{
+        return item.category==it
+      })
+      allGoods.push(hash)
+    })
+
+    console.log('allGoods',allGoods)
+    this.setData({
+      allGoods:allGoods
+    })
   }
 })

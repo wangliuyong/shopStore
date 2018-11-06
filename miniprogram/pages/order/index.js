@@ -1,9 +1,17 @@
 //index.js
-import data from '../../data'
+//import data from '../../data'
 import pay from '../../common/pay'
+import product from '../../common/goods'
+import address from '../../common/address'
+import order from '../../common/order'
 
-let {goods}=data
+
+//let {goods}=data
 let {payRuqest}=pay
+let {getProductById}=product
+let {getUserAddressByUser_id}=address
+let {createOrder}=order
+
 const app = getApp()
 
 Page({
@@ -12,46 +20,47 @@ Page({
       good:{},
       selectCount:""
     },
+    defaultAddress:{},
+    //
     message:"",
-    contacts:{},
-    address:"",
-    sumPrice:0,
-    leaveMessage:""
+    sumPrice:0
   },
   onLoad: function(option) {
-    //option={id:1,count:2}//假数据,调试完就删
-    //console.log('-------111-----------------')
+
+    
+    
+
+
+    console.log(option,">option")
+    getProductById(option.id).then((e)=>{
+      console.log(e.data.product_by_id)
+      this.setData({
+        "order.good":e.data.product_by_id,
+        "order.selectCount":option.count
+      })
+      console.log(this.data.order.good.price,this.data.order)
+      this.setData({sumPrice:this.data.order.good.price*this.data.order.selectCount*100})
+      
+    })
     console.log(option)
-    console.log(goods)
-    let good=goods.filter((item)=>{
-      return item.id==option.id
-    })
-
-    console.log("good",good)
-
-    this.setData({
-     "order.good":good[0],
-     "order.selectCount":option.count
-    })
-    //console.log('-------2------------------')
-    //console.log('sumPrice',this.data.order.good.price*this.data.order.selectCount)
-    this.setData({sumPrice:this.data.order.good.price*this.data.order.selectCount*100})
-
-
   },
   onShow(){
     let that=this
     console.log('ordershow')
-    wx.getStorage({
-      key: 'contacts',
-      success (res) {
-        console.log('res',res.data)
-        that.setData({
-          contacts:res.data,
-          address:res.data.contact+res.data.telephone+res.data.area
-        })
-      } 
+
+    getUserAddressByUser_id('asasa').then((e)=>{
+      console.log("getUserAddressByUser_id",e)
+      let address=e.data.userAddress_by_props
+      address=address.filter((item)=>{
+        return item.default==1
+      })
+      console.log(address)
+
+      that.setData({
+        defaultAddress:address[0]
+      })
     })
+    
   },
   change(e){
     this.setData({
@@ -70,46 +79,44 @@ Page({
       console.log('res',data)
       if(data==1){
         //支付成功
-      //支付成功之后发送请求存入数据库
-      console.log('存入数据库')
-      let createdAt=new Date().toLocaleDateString().split("/").join("-")+' '+new Date().toLocaleTimeString().slice(2),
-                id=new Date().getTime()
-      wx.setStorage({
-        key:"orderSuccess",
-        data:{
-          id,
-          user_id,
-          product_id,
-          productName,
-          productImg,
-          productPrice,
-          unit,
-          count,
-          productPay,
-          orderPay,
-          remark,
-          createdAt,
-          updatedAt
+        //支付成功之后发送请求存入数据库
+        console.log('存入数据库')
+        
+
+        let data={
+          "count": that.data.order.selectCount,
+          "createdAt": new Date().toLocaleDateString().split("/").join("-")+' '+new Date().toLocaleTimeString().slice(2),
+          "id": new Date().getTime(),
+          "orderPay_id": "finishPay",
+          "orderStatus": "1",
+          "orderTotalPay": needPay/100,
+          "productTotalPay": needPay/100,
+          "user_id": openid 
         }
-      })
+
+        console.log("orderData",data)
+        createOrder(data).then((e)=>{
+          console.log(e)
+        })
       }else{
         console.log('支付失败')
-        let createAt=new Date().toLocaleDateString().split("/").join("-")+' '+new Date().toLocaleTimeString().slice(2),
-                id=new Date().getTime()
-        wx.setStorage({
-          key:"orderFail",
-          data:{
-            openid:app.globalData.openid,
-            good_id:that.data.order.good.id,
-            orderStatus:"waitPay",
-            havePay:that.data.sumPrice,
-            subCount:that.data.order.selectCount,
-            leaveMessage:this.data.message,
-            contact:this.data.contacts,
-            createAt,
-            id
-          }
+        let data={
+          "count": that.data.order.selectCount,
+          "createdAt": new Date().toLocaleDateString().split("/").join("-")+' '+new Date().toLocaleTimeString().slice(2),
+          "id": new Date().getTime(),
+          "orderPay_id": "waitPay",
+          "orderStatus": "0",
+          "orderTotalPay": 0,
+          "productTotalPay": needPay/100,
+          "user_id": openid 
+        }
+
+        console.log("orderData",data)
+        createOrder(data).then((e)=>{
+          console.log("createOrderRes",e)
         })
+
+
       }
     })
   },

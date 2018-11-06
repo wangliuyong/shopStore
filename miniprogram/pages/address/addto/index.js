@@ -1,5 +1,10 @@
 //index.js
 import pay from '../../../common/pay'
+import address from '../../../common/address'
+//import { timingSafeEqual } from 'crypto';
+
+
+let {createUserAddress}=address
 
 let {payRuqest}=pay
 
@@ -7,36 +12,29 @@ const app = getApp()
 
 Page({
   data: {
-    region: ['安徽省', '合肥市', ''],
-    //
-    user:{
-      contact:"",
-      telephone:"",
-      area:"",
-      area_detail:"",
-      postcode:""
+    addressData:{
+      "address": "",
+      "area": "",
+      "city": "",
+      "default":0,
+      "id": "",
+      "postcode": "",
+      "province": "",
+      "telephone": "",
+      "updatedAt": "",
+      "user_id": "",
+      "username": ""
     },
-    contacts:{}
+    region: ['安徽省', '合肥市',''],
   },
   onLoad: function(option) {
-    console.log(option)    
+    console.log(option)
+    
+
+   
+
   },
   onShow(){
-    let that=this
-    console.log('addrshow')
-   
-    wx.getStorage({
-      key: 'contacts',
-      success (res) {
-        console.log('res',res.data)
-        that.setData({
-          contacts:res.data,
-        }) 
-        console.log('-----------------------')
-        console.log('contacts',that.data.contacts)
-      } 
-    })
-
     
   },
   clickLocation(){
@@ -44,10 +42,10 @@ Page({
   },
   changeInput(e){
     let index=e.currentTarget.id
-    if(index=='1'){this.setData({"user.contact":e.detail})}
-    if(index=='2'){this.setData({"user.telephone":e.detail})}
-    if(index=='4'){this.setData({"user.area_detail":e.detail})}
-    if(index=='5'){this.setData({"user.postcode":e.detail})}
+    if(index=='1'){this.setData({"addressData.username":e.detail})}
+    if(index=='2'){this.setData({"addressData.telephone":e.detail})}
+    if(index=='4'){this.setData({"addressData.address":e.detail})}
+    if(index=='5'){this.setData({"addressData.postcode":e.detail})}
     console.log(this.data)
   },
   clickArea(){
@@ -55,26 +53,34 @@ Page({
   },
   bindRegionChange(e){
     console.log(e.detail.value)
-    this.setData({"user.area":e.detail.value[0]+e.detail.value[1]+e.detail.value[2]})
+    this.setData({
+      "addressData.province":e.detail.value[0],
+      "addressData.city":e.detail.value[1],
+      "addressData.area":e.detail.value[2],
+    })
+
   },
   save(){
-    let save=true
-    let user=this.data.user;
-    for(let key in user){
-      if(user[key]==''){
+    this.setData({
+      "addressData.default":0,
+      "addressData.id":new Date().getTime(),
+      "addressData.updatedAt":new Date().toLocaleDateString().split("/").join("-")+' '+new Date().toLocaleTimeString().slice(2),
+      "addressData.user_id":app.globalData.openid,
+    })
+
+    let save=true,addData=this.data.addressData
+    for(let key in addData){
+      console.log('this.data.addressData[key]',addData)
+      if(addData[key].length==''||addData[key]==null){
         save=false
       }
     }
+
+    console.log('this.data.addressData',this.data.addressData)
     if(save){
       //提交数据,要修改
-      wx.setStorage({
-        key:"contacts",
-        data:this.data.user,
-        success(){
-          wx.navigateBack({
-            delta: 1
-        })
-        }
+      createUserAddress(this.data.addressData).then((e)=>{
+        console.log('createAddress',e)
       })
     }else{
       wx.showToast({

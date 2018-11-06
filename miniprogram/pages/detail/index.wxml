@@ -20,7 +20,7 @@
   <van-popup show="{{show}}" bind:close="onClose" custom-class="pay">
   <view>价格:{{good.price}}</view>
   <view>库存:{{good.stock}}</view>
-  <view>购买数量:<van-stepper value="{{ selecCount }}" bind:change="countChange" /></view>
+  <view>购买数量:<van-stepper value="{{ carData.count }}" bind:change="countChange" /></view>
     <van-goods-action>
       <van-goods-action-button
         text="加入购物车"
