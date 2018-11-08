@@ -5,7 +5,7 @@ import shopCar from '../../common/shopCar'
 
 let {getProductById}=product
 //let {goods}=data
-let {creaShopCar}=shopCar
+let {createShopCar}=shopCar
 
 const app = getApp()
 
@@ -69,15 +69,13 @@ Page({
     let that=this
     //发送请求存储的购物车
     //发送的数据有
-
     let updatedAt=new Date().toLocaleDateString().split("/").join("-")+' '+new Date().toLocaleTimeString().slice(2)
     this.setData({
       "carData.updatedAt":updatedAt,
       "carData.id":new Date().getTime()
     })
-
     console.log("this.data.carData",this.data.carData)
-    creaShopCar(this.data.carData).then((res)=>{
+    createShopCar(this.data.carData).then((res)=>{
       console.log(res)
       wx.showToast({
         title: '加入购物车成功',

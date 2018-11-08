@@ -1,0 +1,1103 @@
+query adminById($id: ID) {
+    adminById: admin_by_id(id: $id) {
+        id
+        openid
+        username
+        password
+        telephone
+        email
+        createdAt
+        updatedAt
+    }
+}
+
+query orderPayByProps($user_id: String, $order_id: String, $totalPay: Float, $transactionId: String, $payTime: String) {
+    orderPayByProps: orderPay_by_props(user_id: $user_id order_id: $order_id totalPay: $totalPay transactionId: $transactionId payTime: $payTime) {
+        id
+        user_id
+        order {
+            deliveryTime
+            updatedAt
+            payTime
+
+
+            orderTotalPay
+            createdAt
+            orderStatus
+            id
+            orderShipFee
+            count
+            user_id
+            productTotalPay
+        }
+        totalPay
+        transactionId
+        payTime
+    }
+}
+
+query userCartById($id: ID) {
+    userCartById: userCart_by_id(id: $id) {
+        id
+        user_id
+        product {
+            category
+            updatedAt
+            unit
+            name
+            createdAt
+            status
+            id
+            intro
+            price
+            img
+            stock
+        }
+        count
+        createdAt
+        updatedAt
+    }
+}
+
+query userDataById($id: ID) {
+    userDataById: userData_by_id(id: $id) {
+        id
+        nickname
+        avatar
+        isVip
+        vipCode
+        userPoint
+        createdAt
+        updatedAt
+    }
+}
+
+query adminByProps($openid: String, $username: String, $password: String, $telephone: String, $email: String, $createdAt: String, $updatedAt: String) {
+    adminByProps: admin_by_props(openid: $openid username: $username password: $password telephone: $telephone email: $email createdAt: $createdAt updatedAt: $updatedAt) {
+        id
+        openid
+        username
+        password
+        telephone
+        email
+        createdAt
+        updatedAt
+    }
+}
+
+query userSearchByProps($user_id: String, $createdAt: String, $updatedAt: String) {
+    userSearchByProps: userSearch_by_props(user_id: $user_id createdAt: $createdAt updatedAt: $updatedAt) {
+        id
+        user_id
+        keyword
+        createdAt
+        updatedAt
+    }
+}
+
+query userCollectByProps($user_id: String, $createdAt: String, $updatedAt: String) {
+    userCollectByProps: userCollect_by_props(user_id: $user_id createdAt: $createdAt updatedAt: $updatedAt) {
+        id
+        user_id
+        product {
+            category
+            updatedAt
+            unit
+            name
+            createdAt
+            status
+            id
+            intro
+            price
+            img
+            stock
+        }
+        createdAt
+        updatedAt
+    }
+}
+
+query productByProps($category: String, $updatedAt: String, $name: String, $createdAt: String, $status: String, $intro: String, $price: Float, $img: String, $stock: Int) {
+    productByProps: product_by_props(category: $category updatedAt: $updatedAt name: $name createdAt: $createdAt status: $status intro: $intro price: $price img: $img stock: $stock) {
+        category
+        updatedAt
+        unit
+        name
+        createdAt
+        status
+        id
+        intro
+        price
+        img
+        stock
+    }
+}
+
+query orderLogisticsById($id: ID) {
+    orderLogisticsById: orderLogistics_by_id(id: $id) {
+        updatedAt
+        logisticsFee
+        expressId
+        createdAt
+        consigneeTel
+        id
+        consignAddress
+        LogisticsStatus
+        user_id
+        order {
+            deliveryTime
+            updatedAt
+            payTime
+
+
+            orderTotalPay
+            createdAt
+            orderStatus
+            id
+            orderShipFee
+            count
+            user_id
+            productTotalPay
+        }
+        consigneeName
+    }
+}
+
+query orderProductById($id: ID) {
+    orderProductById: orderProduct_by_id(id: $id) {
+        remark
+        updatedAt
+        unit
+        orderPay
+        createdAt
+        productImg
+        productName
+        product {
+            category
+            updatedAt
+            unit
+            name
+            createdAt
+            status
+            id
+            intro
+            price
+            img
+            stock
+        }
+        productPrice
+        id
+        count
+        productPay
+        user_id
+        order {
+            deliveryTime
+            updatedAt
+            payTime
+
+
+            orderTotalPay
+            createdAt
+            orderStatus
+            id
+            orderShipFee
+            count
+            user_id
+            productTotalPay
+        }
+    }
+}
+
+query userCollectById($id: ID) {
+    userCollectById: userCollect_by_id(id: $id) {
+        id
+        user_id
+        product {
+            category
+            updatedAt
+            unit
+            name
+            createdAt
+            status
+            id
+            intro
+            price
+            img
+            stock
+        }
+        createdAt
+        updatedAt
+    }
+}
+
+query userAddressByProps($address: String, $updatedAt: String, $telephone: String, $default: Int, $city: String, $username: String, $postcode: String, $user_id: String, $area: String, $deleteddAt: String, $province: String) {
+    userAddressByProps: userAddress_by_props(address: $address updatedAt: $updatedAt telephone: $telephone
+        default: $default city: $city username: $username postcode: $postcode user_id: $user_id area: $area deleteddAt: $deleteddAt province: $province) {
+        address
+        updatedAt
+        telephone
+        default
+        city
+        username
+        postcode
+        createdAt
+        id
+        user_id
+        area
+        deleteddAt
+        province
+    }
+}
+
+query orderPayById($id: ID) {
+    orderPayById: orderPay_by_id(id: $id) {
+        id
+        user_id
+        order {
+            deliveryTime
+            updatedAt
+            payTime
+
+
+            orderTotalPay
+            createdAt
+            orderStatus
+            id
+            orderShipFee
+            count
+            user_id
+            productTotalPay
+        }
+        totalPay
+        transactionId
+        payTime
+    }
+}
+
+query userAddressById($id: ID) {
+    userAddressById: userAddress_by_id(id: $id) {
+        address
+        updatedAt
+        telephone
+        default
+        city
+        username
+        postcode
+        createdAt
+        id
+        user_id
+        area
+        deleteddAt
+        province
+    }
+}
+
+query orderLogisticsByProps($updatedAt: String, $logisticsFee: Float, $expressId: String, $createdAt: String, $order_id: String, $consigneeTel: String, $consignAddress: String, $LogisticsStatus: String, $user_id: String, $consigneeName: String) {
+    orderLogisticsByProps: orderLogistics_by_props(updatedAt: $updatedAt logisticsFee: $logisticsFee expressId: $expressId createdAt: $createdAt order_id: $order_id consigneeTel: $consigneeTel consignAddress: $consignAddress LogisticsStatus: $LogisticsStatus user_id: $user_id consigneeName: $consigneeName) {
+        updatedAt
+        logisticsFee
+        expressId
+        createdAt
+        consigneeTel
+        id
+        consignAddress
+        LogisticsStatus
+        user_id
+        order {
+            deliveryTime
+            updatedAt
+            payTime
+
+
+            orderTotalPay
+            createdAt
+            orderStatus
+            id
+            orderShipFee
+            count
+            user_id
+            productTotalPay
+        }
+        consigneeName
+    }
+}
+
+query orderById($id: ID) {
+    orderById: order_by_id(id: $id) {
+        deliveryTime
+        updatedAt
+        payTime
+        orderPay {
+            id
+            user_id
+
+            totalPay
+            transactionId
+            payTime
+        }
+        orderLogistics {
+            updatedAt
+            logisticsFee
+            expressId
+            createdAt
+            consigneeTel
+            id
+            consignAddress
+            LogisticsStatus
+            user_id
+
+            consigneeName
+        }
+        orderTotalPay
+        createdAt
+        orderStatus
+        id
+        orderShipFee
+        count
+        user_id
+        productTotalPay
+    }
+}
+
+query orderProductByProps($remark: String, $updatedAt: String, $unit: String, $product_id: String, $orderPay: Float, $createdAt: String, $productImg: String, $productName: String, $order_id: String, $productPrice: Float, $count: Int, $productPay: Float, $user_id: String) {
+    orderProductByProps: orderProduct_by_props(remark: $remark updatedAt: $updatedAt unit: $unit product_id: $product_id orderPay: $orderPay createdAt: $createdAt productImg: $productImg productName: $productName order_id: $order_id productPrice: $productPrice count: $count productPay: $productPay user_id: $user_id) {
+        remark
+        updatedAt
+        unit
+        orderPay
+        createdAt
+        productImg
+        productName
+        product {
+            category
+            updatedAt
+            unit
+            name
+            createdAt
+            status
+            id
+            intro
+            price
+            img
+            stock
+        }
+        productPrice
+        id
+        count
+        productPay
+        user_id
+        order {
+            deliveryTime
+            updatedAt
+            payTime
+
+
+            orderTotalPay
+            createdAt
+            orderStatus
+            id
+            orderShipFee
+            count
+            user_id
+            productTotalPay
+        }
+    }
+}
+
+query productById($id: ID) {
+    productById: product_by_id(id: $id) {
+        category
+        updatedAt
+        unit
+        name
+        createdAt
+        status
+        id
+        intro
+        price
+        img
+        stock
+    }
+}
+
+query userSearchById($id: ID) {
+    userSearchById: userSearch_by_id(id: $id) {
+        id
+        user_id
+        keyword
+        createdAt
+        updatedAt
+    }
+}
+
+query userDataByProps($nickname: String, $avatar: String, $isVip: Boolean, $vipCode: String, $userPoint: Int, $createdAt: String, $updatedAt: String) {
+    userDataByProps: userData_by_props(nickname: $nickname avatar: $avatar isVip: $isVip vipCode: $vipCode userPoint: $userPoint createdAt: $createdAt updatedAt: $updatedAt) {
+        id
+        nickname
+        avatar
+        isVip
+        vipCode
+        userPoint
+        createdAt
+        updatedAt
+    }
+}
+
+query userCartByProps($user_id: String, $product_id: String, $count: Int, $createdAt: String, $updatedAt: String) {
+    userCartByProps: userCart_by_props(user_id: $user_id product_id: $product_id count: $count createdAt: $createdAt updatedAt: $updatedAt) {
+        id
+        user_id
+        product {
+            category
+            updatedAt
+            unit
+            name
+            createdAt
+            status
+            id
+            intro
+            price
+            img
+            stock
+        }
+        count
+        createdAt
+        updatedAt
+    }
+}
+
+query userByProps($openid: String, $username: String, $password: String, $telephone: String, $email: String, $userData_id: String, $createdAt: String, $updatedAt: String) {
+    userByProps: user_by_props(openid: $openid username: $username password: $password telephone: $telephone email: $email userData_id: $userData_id createdAt: $createdAt updatedAt: $updatedAt) {
+        openid
+        username
+        password
+        telephone
+        email
+        userData {
+            id
+            nickname
+            avatar
+            isVip
+            vipCode
+            userPoint
+            createdAt
+            updatedAt
+        }
+        createdAt
+        updatedAt
+    }
+}
+
+query orderByProps($deliveryTime: String, $updatedAt: String, $orderLogistics_id: String, $payTime: String, $orderTotalPay: Float, $createdAt: String, $orderStatus: String, $orderShipFee: Float, $count: Int, $user_id: String, $productTotalPay: Float, $orderPay_id: String) {
+    orderByProps: order_by_props(deliveryTime: $deliveryTime updatedAt: $updatedAt orderLogistics_id: $orderLogistics_id payTime: $payTime orderTotalPay: $orderTotalPay createdAt: $createdAt orderStatus: $orderStatus orderShipFee: $orderShipFee count: $count user_id: $user_id productTotalPay: $productTotalPay orderPay_id: $orderPay_id) {
+        deliveryTime
+        updatedAt
+        payTime
+        orderPay {
+            id
+            user_id
+
+            totalPay
+            transactionId
+            payTime
+        }
+        orderLogistics {
+            updatedAt
+            logisticsFee
+            expressId
+            createdAt
+            consigneeTel
+            id
+            consignAddress
+            LogisticsStatus
+            user_id
+
+            consigneeName
+        }
+        orderTotalPay
+        createdAt
+        orderStatus
+        id
+        orderShipFee
+        count
+        user_id
+        productTotalPay
+    }
+}
+
+mutation createOrderpay($id: ID!, $user_id: String!, $order_id: String!, $totalPay: Float!, $transactionId: String!, $payTime: String!) {
+    createOrderpay: create_orderPay(id: $id user_id: $user_id order_id: $order_id totalPay: $totalPay transactionId: $transactionId payTime: $payTime) {
+        id
+        user_id
+        order {
+            deliveryTime
+            updatedAt
+            payTime
+
+
+            orderTotalPay
+            createdAt
+            orderStatus
+            id
+            orderShipFee
+            count
+            user_id
+            productTotalPay
+        }
+        totalPay
+        transactionId
+        payTime
+    }
+}
+
+mutation createUser($openid: String, $username: String, $password: String, $telephone: String, $email: String, $userData_id: String, $createdAt: String, $updatedAt: String) {
+    createUser: create_user(openid: $openid username: $username password: $password telephone: $telephone email: $email userData_id: $userData_id createdAt: $createdAt updatedAt: $updatedAt) {
+        openid
+        username
+        password
+        telephone
+        email
+        userData {
+            id
+            nickname
+            avatar
+            isVip
+            vipCode
+            userPoint
+            createdAt
+            updatedAt
+        }
+        createdAt
+        updatedAt
+    }
+}
+
+mutation updateProduct($category: String, $updatedAt: String, $unit: Int, $name: String, $createdAt: String, $status: String, $id: ID!, $intro: String, $price: Float, $img: String, $stock: Int) {
+    updateProduct: update_product(category: $category updatedAt: $updatedAt unit: $unit name: $name createdAt: $createdAt status: $status id: $id intro: $intro price: $price img: $img stock: $stock) {
+        category
+        updatedAt
+        unit
+        name
+        createdAt
+        status
+        id
+        intro
+        price
+        img
+        stock
+    }
+}
+
+mutation updateUserdata($id: ID!, $nickname: String, $avatar: String, $isVip: Boolean, $vipCode: String, $userPoint: Int, $createdAt: String, $updatedAt: String) {
+    updateUserdata: update_userData(id: $id nickname: $nickname avatar: $avatar isVip: $isVip vipCode: $vipCode userPoint: $userPoint createdAt: $createdAt updatedAt: $updatedAt) {
+        id
+        nickname
+        avatar
+        isVip
+        vipCode
+        userPoint
+        createdAt
+        updatedAt
+    }
+}
+
+mutation createUsercollect($id: ID!, $user_id: String!, $product_id: Int!, $createdAt: String!, $updatedAt: String) {
+    createUsercollect: create_userCollect(id: $id user_id: $user_id product_id: $product_id createdAt: $createdAt updatedAt: $updatedAt) {
+        id
+        user_id
+        product {
+            category
+            updatedAt
+            unit
+            name
+            createdAt
+            status
+            id
+            intro
+            price
+            img
+            stock
+        }
+        createdAt
+        updatedAt
+    }
+}
+
+mutation createUseraddress($address: String!, $updatedAt: String, $telephone: String!, $default: Int, $city: String!, $username: String!, $postcode: String, $id: ID!, $user_id: String!, $area: String!, $deleteddAt: String, $province: String!) {
+    createUseraddress: create_userAddress(address: $address updatedAt: $updatedAt telephone: $telephone
+        default: $default city: $city username: $username postcode: $postcode id: $id user_id: $user_id area: $area deleteddAt: $deleteddAt province: $province) {
+        address
+        updatedAt
+        telephone
+        default
+        city
+        username
+        postcode
+        createdAt
+        id
+        user_id
+        area
+        deleteddAt
+        province
+    }
+}
+
+mutation deleteUsercart($id: ID, $user_id: String, $product_id: String, $count: Int, $createdAt: String, $updatedAt: String) {
+    deleteUsercart: delete_userCart(id: $id user_id: $user_id product_id: $product_id count: $count createdAt: $createdAt updatedAt: $updatedAt)
+}
+
+mutation updateUseraddress($address: String, $updatedAt: String, $telephone: String, $default: Int, $city: String, $username: String, $postcode: String, $id: ID!, $user_id: String, $area: String, $deleteddAt: String, $province: String) {
+    updateUseraddress: update_userAddress(address: $address updatedAt: $updatedAt telephone: $telephone
+        default: $default city: $city username: $username postcode: $postcode id: $id user_id: $user_id area: $area deleteddAt: $deleteddAt province: $province) {
+        address
+        updatedAt
+        telephone
+        default
+        city
+        username
+        postcode
+        createdAt
+        id
+        user_id
+        area
+        deleteddAt
+        province
+    }
+}
+
+mutation updateAdmin($id: ID!, $openid: String, $username: String, $password: String, $telephone: String, $email: String, $createdAt: String, $updatedAt: String) {
+    updateAdmin: update_admin(id: $id openid: $openid username: $username password: $password telephone: $telephone email: $email createdAt: $createdAt updatedAt: $updatedAt) {
+        id
+        openid
+        username
+        password
+        telephone
+        email
+        createdAt
+        updatedAt
+    }
+}
+
+mutation createUsersearch($id: ID!, $user_id: String!, $keyword: Int!, $createdAt: String!, $updatedAt: String) {
+    createUsersearch: create_userSearch(id: $id user_id: $user_id keyword: $keyword createdAt: $createdAt updatedAt: $updatedAt) {
+        id
+        user_id
+        keyword
+        createdAt
+        updatedAt
+    }
+}
+
+mutation createProduct($category: String!, $updatedAt: String, $unit: Int!, $name: String!, $createdAt: String!, $status: String, $id: ID!, $intro: String, $price: Float!, $img: String, $stock: Int) {
+    createProduct: create_product(category: $category updatedAt: $updatedAt unit: $unit name: $name createdAt: $createdAt status: $status id: $id intro: $intro price: $price img: $img stock: $stock) {
+        category
+        updatedAt
+        unit
+        name
+        createdAt
+        status
+        id
+        intro
+        price
+        img
+        stock
+    }
+}
+
+mutation deleteUserdata($id: ID, $nickname: String, $avatar: String, $isVip: Boolean, $vipCode: String, $userPoint: Int, $createdAt: String, $updatedAt: String) {
+    deleteUserdata: delete_userData(id: $id nickname: $nickname avatar: $avatar isVip: $isVip vipCode: $vipCode userPoint: $userPoint createdAt: $createdAt updatedAt: $updatedAt)
+}
+
+mutation deleteOrderproduct($remark: String, $updatedAt: String, $unit: String, $product_id: String, $orderPay: Float, $createdAt: String, $productImg: String, $productName: String, $order_id: String, $productPrice: Float, $id: ID, $count: Int, $productPay: Float, $user_id: String) {
+    deleteOrderproduct: delete_orderProduct(remark: $remark updatedAt: $updatedAt unit: $unit product_id: $product_id orderPay: $orderPay createdAt: $createdAt productImg: $productImg productName: $productName order_id: $order_id productPrice: $productPrice id: $id count: $count productPay: $productPay user_id: $user_id)
+}
+
+mutation deleteUsercollect($id: ID, $user_id: String, $createdAt: String, $updatedAt: String) {
+    deleteUsercollect: delete_userCollect(id: $id user_id: $user_id createdAt: $createdAt updatedAt: $updatedAt)
+}
+
+mutation updateUsercollect($id: ID!, $user_id: String, $product_id: Int, $createdAt: String, $updatedAt: String) {
+    updateUsercollect: update_userCollect(id: $id user_id: $user_id product_id: $product_id createdAt: $createdAt updatedAt: $updatedAt) {
+        id
+        user_id
+        product {
+            category
+            updatedAt
+            unit
+            name
+            createdAt
+            status
+            id
+            intro
+            price
+            img
+            stock
+        }
+        createdAt
+        updatedAt
+    }
+}
+
+mutation deleteOrder($deliveryTime: String, $updatedAt: String, $orderLogistics_id: String, $payTime: String, $orderTotalPay: Float, $createdAt: String, $orderStatus: String, $id: ID, $orderShipFee: Float, $count: Int, $user_id: String, $productTotalPay: Float, $orderPay_id: String) {
+    deleteOrder: delete_order(deliveryTime: $deliveryTime updatedAt: $updatedAt orderLogistics_id: $orderLogistics_id payTime: $payTime orderTotalPay: $orderTotalPay createdAt: $createdAt orderStatus: $orderStatus id: $id orderShipFee: $orderShipFee count: $count user_id: $user_id productTotalPay: $productTotalPay orderPay_id: $orderPay_id)
+}
+
+mutation deleteAdmin($id: ID, $openid: String, $username: String, $password: String, $telephone: String, $email: String, $createdAt: String, $updatedAt: String) {
+    deleteAdmin: delete_admin(id: $id openid: $openid username: $username password: $password telephone: $telephone email: $email createdAt: $createdAt updatedAt: $updatedAt)
+}
+
+mutation deleteUseraddress($address: String, $updatedAt: String, $telephone: String, $default: Int, $city: String, $username: String, $postcode: String, $id: ID, $user_id: String, $area: String, $deleteddAt: String, $province: String) {
+    deleteUseraddress: delete_userAddress(address: $address updatedAt: $updatedAt telephone: $telephone
+        default: $default city: $city username: $username postcode: $postcode id: $id user_id: $user_id area: $area deleteddAt: $deleteddAt province: $province)
+}
+
+mutation updateUsercart($id: ID!, $user_id: String, $product_id: String, $count: Int, $createdAt: String, $updatedAt: String) {
+    updateUsercart: update_userCart(id: $id user_id: $user_id product_id: $product_id count: $count createdAt: $createdAt updatedAt: $updatedAt) {
+        id
+        user_id
+        product {
+            category
+            updatedAt
+            unit
+            name
+            createdAt
+            status
+            id
+            intro
+            price
+            img
+            stock
+        }
+        count
+        createdAt
+        updatedAt
+    }
+}
+
+mutation deleteUser($openid: String, $username: String, $password: String, $telephone: String, $email: String, $userData_id: String, $createdAt: String, $updatedAt: String) {
+    deleteUser: delete_user(openid: $openid username: $username password: $password telephone: $telephone email: $email userData_id: $userData_id createdAt: $createdAt updatedAt: $updatedAt)
+}
+
+mutation createUsercart($id: ID!, $user_id: String!, $product_id: String!, $count: Int!, $createdAt: String!, $updatedAt: String) {
+    createUsercart: create_userCart(id: $id user_id: $user_id product_id: $product_id count: $count createdAt: $createdAt updatedAt: $updatedAt) {
+        id
+        user_id
+        product {
+            category
+            updatedAt
+            unit
+            name
+            createdAt
+            status
+            id
+            intro
+            price
+            img
+            stock
+        }
+        count
+        createdAt
+        updatedAt
+    }
+}
+
+mutation createUserdata($id: ID!, $nickname: String, $avatar: String, $isVip: Boolean, $vipCode: String, $userPoint: Int, $createdAt: String, $updatedAt: String) {
+    createUserdata: create_userData(id: $id nickname: $nickname avatar: $avatar isVip: $isVip vipCode: $vipCode userPoint: $userPoint createdAt: $createdAt updatedAt: $updatedAt) {
+        id
+        nickname
+        avatar
+        isVip
+        vipCode
+        userPoint
+        createdAt
+        updatedAt
+    }
+}
+
+mutation createOrder($deliveryTime: String, $updatedAt: String, $orderLogistics_id: String, $payTime: String, $orderTotalPay: Float!, $createdAt: String!, $orderStatus: String!, $id: ID!, $orderShipFee: Float, $count: Int!, $user_id: String!, $productTotalPay: Float!, $orderPay_id: String!) {
+    createOrder: create_order(deliveryTime: $deliveryTime updatedAt: $updatedAt orderLogistics_id: $orderLogistics_id payTime: $payTime orderTotalPay: $orderTotalPay createdAt: $createdAt orderStatus: $orderStatus id: $id orderShipFee: $orderShipFee count: $count user_id: $user_id productTotalPay: $productTotalPay orderPay_id: $orderPay_id) {
+        deliveryTime
+        updatedAt
+        payTime
+        orderPay {
+            id
+            user_id
+
+            totalPay
+            transactionId
+            payTime
+        }
+        orderLogistics {
+            updatedAt
+            logisticsFee
+            expressId
+            createdAt
+            consigneeTel
+            id
+            consignAddress
+            LogisticsStatus
+            user_id
+
+            consigneeName
+        }
+        orderTotalPay
+        createdAt
+        orderStatus
+        id
+        orderShipFee
+        count
+        user_id
+        productTotalPay
+    }
+}
+
+mutation deleteUsersearch($id: ID, $user_id: String, $createdAt: String, $updatedAt: String) {
+    deleteUsersearch: delete_userSearch(id: $id user_id: $user_id createdAt: $createdAt updatedAt: $updatedAt)
+}
+
+mutation deleteOrderpay($id: ID, $user_id: String, $order_id: String, $totalPay: Float, $transactionId: String, $payTime: String) {
+    deleteOrderpay: delete_orderPay(id: $id user_id: $user_id order_id: $order_id totalPay: $totalPay transactionId: $transactionId payTime: $payTime)
+}
+
+mutation updateOrderpay($id: ID!, $user_id: String, $order_id: String, $totalPay: Float, $transactionId: String, $payTime: String) {
+    updateOrderpay: update_orderPay(id: $id user_id: $user_id order_id: $order_id totalPay: $totalPay transactionId: $transactionId payTime: $payTime) {
+        id
+        user_id
+        order {
+            deliveryTime
+            updatedAt
+            payTime
+
+
+            orderTotalPay
+            createdAt
+            orderStatus
+            id
+            orderShipFee
+            count
+            user_id
+            productTotalPay
+        }
+        totalPay
+        transactionId
+        payTime
+    }
+}
+
+mutation deleteOrderlogistics($updatedAt: String, $logisticsFee: Float, $expressId: String, $createdAt: String, $order_id: String, $consigneeTel: String, $id: ID, $consignAddress: String, $LogisticsStatus: String, $user_id: String, $consigneeName: String) {
+    deleteOrderlogistics: delete_orderLogistics(updatedAt: $updatedAt logisticsFee: $logisticsFee expressId: $expressId createdAt: $createdAt order_id: $order_id consigneeTel: $consigneeTel id: $id consignAddress: $consignAddress LogisticsStatus: $LogisticsStatus user_id: $user_id consigneeName: $consigneeName)
+}
+
+mutation updateUsersearch($id: ID!, $user_id: String, $keyword: Int, $createdAt: String, $updatedAt: String) {
+    updateUsersearch: update_userSearch(id: $id user_id: $user_id keyword: $keyword createdAt: $createdAt updatedAt: $updatedAt) {
+        id
+        user_id
+        keyword
+        createdAt
+        updatedAt
+    }
+}
+
+mutation updateOrder($deliveryTime: String, $updatedAt: String, $orderLogistics_id: String, $payTime: String, $orderTotalPay: Float, $createdAt: String, $orderStatus: String, $id: ID!, $orderShipFee: Float, $count: Int, $user_id: String, $productTotalPay: Float, $orderPay_id: String) {
+    updateOrder: update_order(deliveryTime: $deliveryTime updatedAt: $updatedAt orderLogistics_id: $orderLogistics_id payTime: $payTime orderTotalPay: $orderTotalPay createdAt: $createdAt orderStatus: $orderStatus id: $id orderShipFee: $orderShipFee count: $count user_id: $user_id productTotalPay: $productTotalPay orderPay_id: $orderPay_id) {
+        deliveryTime
+        updatedAt
+        payTime
+        orderPay {
+            id
+            user_id
+
+            totalPay
+            transactionId
+            payTime
+        }
+        orderLogistics {
+            updatedAt
+            logisticsFee
+            expressId
+            createdAt
+            consigneeTel
+            id
+            consignAddress
+            LogisticsStatus
+            user_id
+
+            consigneeName
+        }
+        orderTotalPay
+        createdAt
+        orderStatus
+        id
+        orderShipFee
+        count
+        user_id
+        productTotalPay
+    }
+}
+
+mutation createOrderlogistics($updatedAt: String, $logisticsFee: Float, $expressId: String!, $createdAt: String!, $order_id: String!, $consigneeTel: String!, $id: ID!, $consignAddress: String!, $LogisticsStatus: String, $user_id: String!, $consigneeName: String!) {
+    createOrderlogistics: create_orderLogistics(updatedAt: $updatedAt logisticsFee: $logisticsFee expressId: $expressId createdAt: $createdAt order_id: $order_id consigneeTel: $consigneeTel id: $id consignAddress: $consignAddress LogisticsStatus: $LogisticsStatus user_id: $user_id consigneeName: $consigneeName) {
+        updatedAt
+        logisticsFee
+        expressId
+        createdAt
+        consigneeTel
+        id
+        consignAddress
+        LogisticsStatus
+        user_id
+        order {
+            deliveryTime
+            updatedAt
+            payTime
+
+
+            orderTotalPay
+            createdAt
+            orderStatus
+            id
+            orderShipFee
+            count
+            user_id
+            productTotalPay
+        }
+        consigneeName
+    }
+}
+
+mutation updateOrderlogistics($updatedAt: String, $logisticsFee: Float, $expressId: String, $createdAt: String, $order_id: String, $consigneeTel: String, $id: ID!, $consignAddress: String, $LogisticsStatus: String, $user_id: String, $consigneeName: String) {
+    updateOrderlogistics: update_orderLogistics(updatedAt: $updatedAt logisticsFee: $logisticsFee expressId: $expressId createdAt: $createdAt order_id: $order_id consigneeTel: $consigneeTel id: $id consignAddress: $consignAddress LogisticsStatus: $LogisticsStatus user_id: $user_id consigneeName: $consigneeName) {
+        updatedAt
+        logisticsFee
+        expressId
+        createdAt
+        consigneeTel
+        id
+        consignAddress
+        LogisticsStatus
+        user_id
+        order {
+            deliveryTime
+            updatedAt
+            payTime
+
+
+            orderTotalPay
+            createdAt
+            orderStatus
+            id
+            orderShipFee
+            count
+            user_id
+            productTotalPay
+        }
+        consigneeName
+    }
+}
+
+mutation createOrderproduct($remark: String, $updatedAt: String, $unit: String!, $product_id: String!, $orderPay: Float!, $createdAt: String!, $productImg: String, $productName: String, $order_id: String!, $productPrice: Float, $id: ID!, $count: Int!, $productPay: Float, $user_id: String!) {
+    createOrderproduct: create_orderProduct(remark: $remark updatedAt: $updatedAt unit: $unit product_id: $product_id orderPay: $orderPay createdAt: $createdAt productImg: $productImg productName: $productName order_id: $order_id productPrice: $productPrice id: $id count: $count productPay: $productPay user_id: $user_id) {
+        remark
+        updatedAt
+        unit
+        orderPay
+        createdAt
+        productImg
+        productName
+        product {
+            category
+            updatedAt
+            unit
+            name
+            createdAt
+            status
+            id
+            intro
+            price
+            img
+            stock
+        }
+        productPrice
+        id
+        count
+        productPay
+        user_id
+        order {
+            deliveryTime
+            updatedAt
+            payTime
+
+
+            orderTotalPay
+            createdAt
+            orderStatus
+            id
+            orderShipFee
+            count
+            user_id
+            productTotalPay
+        }
+    }
+}
+
+mutation deleteProduct($category: String, $updatedAt: String, $name: String, $createdAt: String, $status: String, $id: ID, $intro: String, $price: Float, $img: String, $stock: Int) {
+    deleteProduct: delete_product(category: $category updatedAt: $updatedAt name: $name createdAt: $createdAt status: $status id: $id intro: $intro price: $price img: $img stock: $stock)
+}
+
+mutation updateOrderproduct($remark: String, $updatedAt: String, $unit: String, $product_id: String, $orderPay: Float, $createdAt: String, $productImg: String, $productName: String, $order_id: String, $productPrice: Float, $id: ID!, $count: Int, $productPay: Float, $user_id: String) {
+    updateOrderproduct: update_orderProduct(remark: $remark updatedAt: $updatedAt unit: $unit product_id: $product_id orderPay: $orderPay createdAt: $createdAt productImg: $productImg productName: $productName order_id: $order_id productPrice: $productPrice id: $id count: $count productPay: $productPay user_id: $user_id) {
+        remark
+        updatedAt
+        unit
+        orderPay
+        createdAt
+        productImg
+        productName
+        product {
+            category
+            updatedAt
+            unit
+            name
+            createdAt
+            status
+            id
+            intro
+            price
+            img
+            stock
+        }
+        productPrice
+        id
+        count
+        productPay
+        user_id
+        order {
+            deliveryTime
+            updatedAt
+            payTime
+
+
+            orderTotalPay
+            createdAt
+            orderStatus
+            id
+            orderShipFee
+            count
+            user_id
+            productTotalPay
+        }
+    }
+}
+
+mutation createAdmin($id: ID!, $openid: String, $username: String, $password: String, $telephone: String, $email: String, $createdAt: String, $updatedAt: String) {
+    createAdmin: create_admin(id: $id openid: $openid username: $username password: $password telephone: $telephone email: $email createdAt: $createdAt updatedAt: $updatedAt) {
+        id
+        openid
+        username
+        password
+        telephone
+        email
+        createdAt
+        updatedAt
+    }
+}

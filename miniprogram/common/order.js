@@ -8,30 +8,52 @@ var gql = GraphQL({
   url: config.HTTP_DATA_URL
 },true);
 
-let createOrder=function(data){
+let createProductOrder=function(data){
     return gql.mutate({
-        mutation:`mutation createOrder($count: Int!,$createdAt: String!,$deliveryTime: String,$id: ID!,$orderLogistics_id: String,$orderPay_id: String!,
-            $orderShipFee: Float,$orderStatus: String!,$orderTotalPay: Float!,$payTime: String,$productTotalPay: Float!,$updatedAt: String,$user_id: String!){
-              create_order(count:$count,createdAt:$createdAt,deliveryTime:$deliveryTime,id:$id,orderLogistics_id:$orderLogistics_id,
-              orderPay_id:$orderPay_id,orderShipFee:$orderShipFee,orderStatus:$orderStatus,orderTotalPay:$orderTotalPay,payTime:$payTime,productTotalPay:$productTotalPay,
-              updatedAt:$updatedAt,user_id:$user_id){
-                count
-                createdAt
-                id
-                orderPay {
-                  id
-                  order {
+        mutation:`mutation createorderProduct($productPrice: Float,$updatedAt: String, $unit: String!,$remark: String, $product_id: String!,$productImg: String ,$productPay: Float,$productName: String,$orderPay: Float!, $createdAt: String!, $order_id: String!, $id: ID!, $count: Int!, $user_id: String!,$orderStatus: String,
+            ) {
+                createorderProduct: create_orderProduct(remark:$remark productPrice:$productPrice updatedAt: $updatedAt unit: $unit productPay:$productPay productImg:$productImg productName:$productName product_id: $product_id orderPay: $orderPay createdAt: $createdAt order_id: $order_id id: $id count: $count user_id: $user_id) {
+                    remark
+                    updatedAt
+                    unit
+                    orderPay
+                    createdAt
+                    productImg
+                    productName
+                    product {
+                        category
+                        updatedAt
+                        unit
+                        name
+                        createdAt
+                        status
+                        id
+                        intro
+                        price
+                        img
+                        stock
+                    }
+                    productPrice
                     id
-                  }
-                  payTime
-                  totalPay
-                  transactionId
-                  user_id
+                    count
+                    productPay
+                    user_id
+                    order {
+                        deliveryTime
+                        updatedAt
+                        payTime
+            
+            
+                        orderTotalPay
+                        createdAt
+                        orderStatus
+                        id
+                        orderShipFee
+                        count
+                        user_id
+                        productTotalPay
+                    }
                 }
-                orderStatus
-                orderTotalPay
-                count
-              }
             }`,
         variables:data 
       }).then((e)=>{
@@ -39,6 +61,55 @@ let createOrder=function(data){
       })
 }
 
+
+
+let createOrder=function(data){
+  return gql.mutate({
+      mutation:`mutation createorder($deliveryTime: String, $updatedAt: String, $orderLogistics_id: String, $payTime: String, $orderTotalPay: Float!, $createdAt: String!, $orderStatus: String!, $id: ID!, $orderShipFee: Float, $count: Int!, $user_id: String!, $productTotalPay: Float!, $orderPay_id: String!) {
+        createorder: create_order(deliveryTime: $deliveryTime updatedAt: $updatedAt orderLogistics_id: $orderLogistics_id payTime: $payTime orderTotalPay: $orderTotalPay createdAt: $createdAt orderStatus: $orderStatus id: $id orderShipFee: $orderShipFee count: $count user_id: $user_id productTotalPay: $productTotalPay orderPay_id: $orderPay_id) {
+            deliveryTime
+            updatedAt
+            payTime
+            orderPay {
+                id
+                user_id
+    
+                totalPay
+                transactionId
+                payTime
+            }
+            orderLogistics {
+                updatedAt
+                logisticsFee
+                expressId
+                createdAt
+                consigneeTel
+                id
+                consignAddress
+                LogisticsStatus
+                user_id
+    
+                consigneeName
+            }
+            orderTotalPay
+            createdAt
+            orderStatus
+            id
+            orderShipFee
+            count
+            user_id
+            productTotalPay
+        }
+    }`,
+      variables:data 
+    }).then((e)=>{
+      return e
+    })
+}
+
+
+
 export default {
-    createOrder
+  createProductOrder,
+  createOrder
 }
