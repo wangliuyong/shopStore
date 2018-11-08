@@ -1,4 +1,8 @@
 //index.js
+import order from '../../common/order'
+
+let {getOrderProduct}=order
+
 const app = getApp()
 
 Page({
@@ -8,15 +12,15 @@ Page({
     logged: false,
     takeSession: false,
     requestResult: '',
-    orderList:[
-      {id:54456,code:897977,status:1,goods:[{id:3,count:1020,name:"小学低年级版",goodintro:"适合小学生",sort:"magazine",picture:"http://www.snbl.com.cn/administer/eWebEditor/UploadFile/20188713445428.jpg",price:0.01}],amount:2},
-      {id:54431256,code:892137977,status:0,goods:[{id:4,count:145,name:"高中版",goodintro:"适合高中生",sort:"magazine",picture:"http://qqacc.ioobot.com/20188713436270.jpg",price:0.01}],amount:2},
-      {id:333,code:33213,status:1,goods:[{id:1,count:1000,name:"红富士苹果1",goodintro:"选自天然",sort:"fruit",picture:"http://www.snbl.com.cn/administer/eWebEditor/UploadFile/2018871341203.jpg",price:0.01}],amount:2}
-    ]
+    orderList:[]
   },
 
   onLoad: function() {
-   
+    console.log("app.globalData.openid",app.globalData.openid)
+    this.getOrder({"user_id":"ovtkn4zONC3IzhpykQ7cSLZ85YFg"})
+  },
+  onShow(){
+
   },
   pay(){
     //去支付
@@ -26,5 +30,15 @@ Page({
   },
   cancelOrder(){
     //取消订单
+  },
+  //封装的函数
+  getOrder(data){
+    console.log(data)
+    getOrderProduct(data).then((e)=>{
+      console.log('---------',e.data)
+      this.setData({
+        orderList:e.data.orderProductByProps
+      })
+    })
   }
 })

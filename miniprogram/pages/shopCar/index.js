@@ -30,10 +30,19 @@ Page({
     this.getShopCar()
   },
   onSubmit(){
-
+    let that =this;
     let needPay=this.data.sumPrice,openid=app.globalData.openid
     console.log(needPay,openid)
     payRuqest(needPay,openid,(data)=>{
+      if(data==1){
+        //支付成功之后创建订单
+        deleteShopCar({user_id:app.globalData.openid}).then((e)=>{
+          that.getShopCar()
+        })
+      }else{
+        //提示支付不成功
+
+      }
       
     })
 

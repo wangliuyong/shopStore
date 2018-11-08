@@ -10,51 +10,57 @@ var gql = GraphQL({
 
 let createProductOrder=function(data){
     return gql.mutate({
-        mutation:`mutation createorderProduct($productPrice: Float,$updatedAt: String, $unit: String!,$remark: String, $product_id: String!,$productImg: String ,$productPay: Float,$productName: String,$orderPay: Float!, $createdAt: String!, $order_id: String!, $id: ID!, $count: Int!, $user_id: String!,$orderStatus: String,
-            ) {
-                createorderProduct: create_orderProduct(remark:$remark productPrice:$productPrice updatedAt: $updatedAt unit: $unit productPay:$productPay productImg:$productImg productName:$productName product_id: $product_id orderPay: $orderPay createdAt: $createdAt order_id: $order_id id: $id count: $count user_id: $user_id) {
-                    remark
+        mutation:`mutation createOrderproduct($remark: String, $updatedAt: String, $unit: String!, $product_id: String!, $orderPay: Float!, $createdAt: String!, $productImg: String, $productName: String, $order_id: String!, $productPrice: Float, $id: ID!, $count: Int!, $productPay: Float, $user_id: String!, $orderPay_id: String) {
+            createOrderproduct: create_orderProduct(remark: $remark updatedAt: $updatedAt unit: $unit product_id: $product_id orderPay: $orderPay createdAt: $createdAt productImg: $productImg productName: $productName order_id: $order_id productPrice: $productPrice id: $id count: $count productPay: $productPay user_id: $user_id orderPay_id: $orderPay_id) {
+                remark
+                updatedAt
+                unit
+                orderPay {
+                    id
+                    user_id
+        
+                    totalPay
+                    transactionId
+                    payTime
+                }
+                createdAt
+                productImg
+                productName
+                product {
+                    category
                     updatedAt
                     unit
-                    orderPay
+                    name
                     createdAt
-                    productImg
-                    productName
-                    product {
-                        category
-                        updatedAt
-                        unit
-                        name
-                        createdAt
-                        status
-                        id
-                        intro
-                        price
-                        img
-                        stock
-                    }
-                    productPrice
+                    status
                     id
-                    count
-                    productPay
-                    user_id
-                    order {
-                        deliveryTime
-                        updatedAt
-                        payTime
-            
-            
-                        orderTotalPay
-                        createdAt
-                        orderStatus
-                        id
-                        orderShipFee
-                        count
-                        user_id
-                        productTotalPay
-                    }
+                    intro
+                    price
+                    img
+                    stock
                 }
-            }`,
+                productPrice
+                id
+                count
+                productPay
+                user_id
+                order {
+                    deliveryTime
+                    updatedAt
+                    payTime
+        
+        
+                    orderTotalPay
+                    createdAt
+                    orderStatus
+                    id
+                    orderShipFee
+                    count
+                    user_id
+                    productTotalPay
+                }
+            }
+        }`,
         variables:data 
       }).then((e)=>{
         return e
@@ -107,9 +113,67 @@ let createOrder=function(data){
     })
 }
 
-
-
+let getOrderProduct=function(data){
+    return gql.query({
+        query: `query orderProductByProps($remark: String, $updatedAt: String, $unit: String, $product_id: String, $orderPay: Float, $createdAt: String, $productImg: String, $productName: String, $order_id: String, $productPrice: Float, $count: Int, $productPay: Float, $user_id: String, $orderPay_id: String) {
+            orderProductByProps: orderProduct_by_props(remark: $remark updatedAt: $updatedAt unit: $unit product_id: $product_id orderPay: $orderPay createdAt: $createdAt productImg: $productImg productName: $productName order_id: $order_id productPrice: $productPrice count: $count productPay: $productPay user_id: $user_id orderPay_id: $orderPay_id) {
+                remark
+                updatedAt
+                unit
+                orderPay {
+                    id
+                    user_id
+                    totalPay
+                    transactionId
+                    payTime
+                }
+                createdAt
+                productImg
+                productName
+                product {
+                    category
+                    updatedAt
+                    unit
+                    name
+                    createdAt
+                    status
+                    id
+                    intro
+                    price
+                    img
+                    stock
+                }
+                productPrice
+                id
+                count
+                productPay
+                user_id
+                order {
+                    deliveryTime
+                    updatedAt
+                    payTime
+        
+        
+                    orderTotalPay
+                    createdAt
+                    orderStatus
+                    id
+                    orderShipFee
+                    count
+                    user_id
+                    productTotalPay
+                }
+            }
+        }`,
+        variables: data
+      }).then((res) => {
+        return res
+      }).catch((error) => {
+        return error
+      })
+}
 export default {
   createProductOrder,
-  createOrder
+  createOrder,
+  getOrderProduct
 }

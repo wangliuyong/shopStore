@@ -1,6 +1,9 @@
 
 //index.js
 //获取应用实例
+import address from '../../common/address'
+
+let {userAddressByProps}=address
 var app = getApp()
 
 Page({
@@ -8,6 +11,7 @@ Page({
     allAddress: [],//地址列表
   },
   onLoad: function () {
+    this.getAddress({"user_id":app.globalData.openid})
     
   },
   onShow:function(){
@@ -17,5 +21,16 @@ Page({
     wx.navigateTo({
         url: '/pages/address/addto/index'
       })
+  },
+  //封装函数
+  getAddress(data){
+    userAddressByProps(data).then((e)=>{
+      console.log(e.data.userAddressByProps)
+      this.setData({
+        allAddress:e.data.userAddressByProps
+      })
+
+      
+    })
   }
 })

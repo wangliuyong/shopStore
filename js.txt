@@ -642,9 +642,7 @@ mutation createUseraddress($address: String!, $updatedAt: String, $telephone: St
     }
 }
 
-mutation deleteUsercart($id: ID, $user_id: String, $product_id: String, $count: Int, $createdAt: String, $updatedAt: String) {
-    deleteUsercart: delete_userCart(id: $id user_id: $user_id product_id: $product_id count: $count createdAt: $createdAt updatedAt: $updatedAt)
-}
+c
 
 mutation updateUseraddress($address: String, $updatedAt: String, $telephone: String, $default: Int, $city: String, $username: String, $postcode: String, $id: ID!, $user_id: String, $area: String, $deleteddAt: String, $province: String) {
     updateUseraddress: update_userAddress(address: $address updatedAt: $updatedAt telephone: $telephone

@@ -92,73 +92,101 @@ Page({
     let needPay=this.data.order.good.price*this.data.order.selectCount*100,
         openid=app.globalData.openid,
         orderID=new Date().getTime(),
-        count=that.data.order.selectCount
+        count=that.data.order.selectCount,
+        creaatAt=new Date().toLocaleDateString().split("/").join("-")+' '+new Date().toLocaleTimeString().slice(2),
+        productPay=that.data.order.good.price *that.data.order.selectCount,
+        id=new Date().getTime()
 
     console.log('needPay',needPay,'openid',openid)
     console.log("this.data",that.data)
-    //订单产品信息
-    let ProductOrdedata={
-      "count": count,
-      "createdAt": new Date().toLocaleDateString().split("/").join("-")+' '+new Date().toLocaleTimeString().slice(2),
-      "id": new Date().getTime(),
-      "orderPay": needPay/100,
-      "order_id": orderID,
-      "productImg": that.data.order.good.img,
-      "productName": that.data.order.good.name,
-      "productPay": that.data.order.good.price *that.data.order.selectCount,
-      "productPrice": that.data.order.good.price,
-      "product_id": that.data.order.good.id,
-      "remark": that.data.message,
-      "unit": "200",
-      "user_id": openid
-    }
-    console.log("orderData",ProductOrdedata)
-    createProductOrder(ProductOrdedata).then((e)=>{
-      console.log("createProductOrder",e)
-    })
-    
     payRuqest(needPay,openid,(data)=>{
       console.log('res',data)
       if(data==1){
         //支付成功
         //支付成功之后发送请求存入数据库
         console.log('存入数据库')
-        let createOrderdata={
+        //订单产品信息
+        let ProductOrdedata={
           "count": count,
-          "createdAt": new Date().toLocaleDateString().split("/").join("-")+' '+new Date().toLocaleTimeString().slice(2),
-          "id": new Date().getTime(),
+          "createdAt":creaatAt ,
+          "id": id,
+          "orderPay": needPay/100,
+          "order_id": orderID,
+          "orderPay_id": "finishPay",
+          "productImg": that.data.order.good.img,
+          "productName": that.data.order.good.name,
+          "productPay": productPay,
+          "productPrice": that.data.order.good.price,
+          "product_id": that.data.order.good.id,
+          "remark": that.data.message,
+          "unit": "200",
+          "user_id": openid
+        }
+
+        console.log("orderData",ProductOrdedata)
+        createProductOrder(ProductOrdedata).then((e)=>{
+          console.log("createProductOrder",e)
+        })
+
+
+        let orderData = {
+          "count": count,
+          "createdAt": creaatAt,
+          "id": id,
           "orderPay_id": "finishPay",
           "orderStatus": "1",
-          "orderTotalPay": needPay/100+10,
-          "productTotalPay": needPay/100,
-          "user_id": openid,
-          "deliveryTime": "暂无物流信息",
-          "orderLogistics_id": "京东物流",
-          "orderShipFee": 10,
-          "payTime": new Date().toLocaleDateString().split("/").join("-")+' '+new Date().toLocaleTimeString().slice(2)
+          "orderTotalPay": needPay/100,
+          "productTotalPay": productPay,
+          "user_id": openid
         }
-        createOrder(createOrderdata).then((e)=>{
+
+        createOrder(orderData).then((e)=>{
           console.log("createOrder",e)
         })
-        
+          
       }else{
-        let createOrderdata={
+        //订单产品信息
+        let ProductOrdedata={
           "count": count,
-          "createdAt": new Date().toLocaleDateString().split("/").join("-")+' '+new Date().toLocaleTimeString().slice(2),
-          "id": new Date().getTime(),
+          "createdAt":creaatAt ,
+          "id": id,
+          "orderPay": needPay/100,
+          "order_id": orderID,
           "orderPay_id": "waitPay",
-          "orderStatus": "1",
-          "orderTotalPay": needPay/100+10,
-          "productTotalPay": needPay/100,
-          "user_id": openid,
-          "deliveryTime": "暂无物流信息",
-          "orderLogistics_id": "京东物流",
-          "orderShipFee": 10,
-          "payTime": new Date().toLocaleDateString().split("/").join("-")+' '+new Date().toLocaleTimeString().slice(2)
+          "productImg": that.data.order.good.img,
+          "productName": that.data.order.good.name,
+          "productPay": productPay,
+          "productPrice": that.data.order.good.price,
+          "product_id": that.data.order.good.id,
+          "remark": that.data.message,
+          "unit": "200",
+          "user_id": openid
         }
-        createOrder(createOrderdata).then((e)=>{
+
+        console.log("orderData",ProductOrdedata)
+        createProductOrder(ProductOrdedata).then((e)=>{
+          console.log("createProductOrder",e)
+        })
+
+
+        
+        let orderData = {
+          "count": count,
+          "createdAt": creaatAt,
+          "id": id,
+          "orderPay_id": "waitPay",
+          "orderStatus": "0",
+          "orderTotalPay": needPay/100,
+          "productTotalPay": productPay,
+          "user_id": openid
+        }
+
+
+        createOrder(orderData).then((e)=>{
           console.log("createOrder",e)
         })
+
+
       }
     })
   }

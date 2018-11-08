@@ -2,10 +2,11 @@
 <view class="container">
   <view class="detail">
     <image style="width: 100%; background-color: #eeeeee;"  src="{{good.img}}"></image>
-    <van-panel title="{{good.name}}" desc="{{good.intro}}" status="热销中">
-      <view>商品简介:{{good.intro}}</view>
-      <view>￥{{good.price}}</view>
-      <view>剩余数量{{good.stock}}</view>
+    <van-panel title="{{good.name}}" desc="{{good.intro}}" status="￥{{good.price}}" use-footer-slot>
+    <view slot="footer">
+      <van-button size="small">简介:{{good.intro}} </van-button>
+      <van-button size="small">剩余:{{good.stock}}</van-button>
+    </view>
     </van-panel>
   </view>
   <view>

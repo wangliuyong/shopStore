@@ -1,12 +1,10 @@
 //index.js
-import pay from '../../../common/pay'
 import address from '../../../common/address'
 //import { timingSafeEqual } from 'crypto';
 
 
 let {createUserAddress}=address
 
-let {payRuqest}=pay
 
 const app = getApp()
 
@@ -29,9 +27,6 @@ Page({
   },
   onLoad: function(option) {
     console.log(option)
-    
-
-   
 
   },
   onShow(){

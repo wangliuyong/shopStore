@@ -61,7 +61,34 @@ let getUserAddressByUser_id=function(userId){
     })
 }
 
+let userAddressByProps=function(data){
+    return gql.query({
+        query:`query userAddressByProps($address: String, $updatedAt: String, $telephone: String, $default: Int, $city: String, $username: String, $postcode: String, $user_id: String, $area: String, $deleteddAt: String, $province: String) {
+            userAddressByProps: userAddress_by_props(address: $address updatedAt: $updatedAt telephone: $telephone
+                default: $default city: $city username: $username postcode: $postcode user_id: $user_id area: $area deleteddAt: $deleteddAt province: $province) {
+                address
+                updatedAt
+                telephone
+                default
+                city
+                username
+                postcode
+                createdAt
+                id
+                user_id
+                area
+                deleteddAt
+                province
+            }
+        }`,
+        variables:data
+    }).then((e)=>{
+        return e
+    })
+}
+
 export default {
     createUserAddress,
-    getUserAddressByUser_id
+    getUserAddressByUser_id,
+    userAddressByProps
 }
