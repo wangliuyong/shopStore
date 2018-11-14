@@ -8,29 +8,31 @@ var gql = GraphQL({
   url: config.HTTP_DATA_URL
 },true);
 
-var createUser=function(user) {
-    let {createdAt,email,openid,password,telephone,updatedAt,userData_id,username}=user
+var createUser=function(data) {
   return gql.mutate({
-    mutation: `mutation createUser($createdAt:String,$email: String,$openid: String,$password: String,$telephone: String,
-        $updatedAt: String,$userData_id: String,$username: String){
-        create_user(createdAt:$createdAt,email:$email,openid:$openid,password:$password,telephone:$telephone,
-        updatedAt:$updatedAt,userData_id:$userData_id,username:$username){
-        createdAt
-        email
-        openid
-        password
-        telephone
-        userData {
-        id
-        }
-        username
-        updatedAt
-
-        }
-}`,
-    variables: {
-        createdAt,email,openid,password,telephone,updatedAt,userData_id,username
-    }
+    mutation: `mutation createuser($email: String, $updatedAt: String, $password: String, $telephone: String, $username: String, $createdAt: String, $openid: String, $id: ID!, $userData_id: ID) {
+      createuser: create_user(email: $email updatedAt: $updatedAt password: $password telephone: $telephone username: $username createdAt: $createdAt openid: $openid id: $id userData_id: $userData_id) {
+          email
+          updatedAt
+          password
+          telephone
+          username
+          createdAt
+          openid
+          id
+          userData_id {
+              id
+              nickname
+              avatar
+              isVip
+              vipCode
+              userPoint
+              createdAt
+              updatedAt
+          }
+      }
+  }`,
+    variables: data
   }).then((res) => {
     return res
   }).catch(() => {
@@ -38,26 +40,41 @@ var createUser=function(user) {
   })
 }
 
-var getUserByOpenid=function(openid) {
+var getUserByProps=function(data) {
   return gql.query({
-    query: `query getUserByOpenid($openid:String){
-        user_by_props(openid:$openid){
-          openid
+      query: `query userbyprops($openid: String, $username: String, $password: String, $telephone: String, $email: String, $userData_id: ID, $createdAt: String, $updatedAt: String) {
+        userbyprops: user_by_props(openid: $openid username: $username password: $password telephone: $telephone email: $email userData_id: $userData_id createdAt: $createdAt updatedAt: $updatedAt) {
+            email
+            updatedAt
+            password
+            telephone
+            username
+            createdAt
+            openid
+            id
+            userData_id {
+                id
+                nickname
+                avatar
+                isVip
+                vipCode
+                userPoint
+                createdAt
+                updatedAt
+            }
         }
       }`,
-    variables: {
-        openid
-    }
-  }).then((res) => {
-    return res
-  }).catch(() => {
-
-  })
+      variables: data
+    }).then((res) => {
+      return res
+    }).catch(() => {
+      return res
+    })
 }
 
 
 
 export default{
     createUser,
-    getUserByOpenid
+    getUserByProps
 }

@@ -9,5 +9,5 @@
             </van-card>
         </view>
     </scroll-view>
-    <van-submit-bar price="{{ sumPrice }}" button-text="提交订单" bind:submit="onSubmit"/>
+    <van-submit-bar price="{{ sumPrice }}" button-text="去支付" bind:submit="onSubmit"/>
 </view>

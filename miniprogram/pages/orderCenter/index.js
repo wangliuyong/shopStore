@@ -58,16 +58,19 @@ Page({
       for(let i=0;i<orderArr.length;i++){
         getOrderProduct({order_id:orderArr[i].id}).then((e)=>{
           console.log('getOrderProduct',e.data.orderProductbyprops)
-          orderArr[i].product=e.data.orderProductbyprops
+          orderArr[i].product_id=e.data.orderProductbyprops
         })
       }
-
-      that.setData({
-        orderList:orderArr
-      })
-      console.log('orderList',that.data.product,"orderArr",orderArr)
-
+      console.log(orderArr)
+      that.setOrderData(orderArr)
     })
+  },
+  setOrderData(orderArr){
+    this.setData({
+      "orderList":orderArr
+    })
+
+    console.log("this.data.orderList",this.data.orderList)
   }
 })
 

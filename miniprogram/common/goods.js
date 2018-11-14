@@ -30,8 +30,8 @@ let getProductByStatus=function(status){
         }
       }).then((res) => {
         return res
-      }).catch(() => {
-    
+      }).catch((e) => {
+        return e
       })
 }
 
@@ -57,8 +57,8 @@ let getProductById=function(id){
         }
       }).then((res) => {
         return res
-      }).catch(() => {
-    
+      }).catch((e) => {
+        return e
       })
 }
 

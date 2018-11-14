@@ -14,7 +14,8 @@ Page({
     allGood:{},
     good_id:"",
     allGoods:[],
-    sumPrice:""
+    sumPrice:"",
+    shopCarCount:''
   },
   onLoad: function(option) {
    console.log('option',option)
@@ -31,51 +32,33 @@ Page({
     
   },
   onSubmit(){
-    let that =this;
-    let needPay=this.data.sumPrice,
-        openid=app.globalData.openid
-    
-    payRuqest(needPay,openid,(data)=>{
-      if(data==1){
-        //支付成功之后创建订单
-        let payTime=new Date().toLocaleDateString().split("/").join("-")+' '+new Date().toLocaleTimeString().slice(2),
-            shopCar=that.data.allGoods
-        that.createOrder({orderStatus:"1",payTime,shopCar})
-
-        deleteShopCar({user_id:app.globalData.openid}).then((e)=>{
-          that.getShopCar()
-        })
-      }else{
-        //提示支付不成功
-        let payTime=new Date().toLocaleDateString().split("/").join("-")+' '+new Date().toLocaleTimeString().slice(2),
-            shopCar=that.data.allGoods
-        that.createOrder({orderStatus:"0",payTime,shopCar})
-
-        deleteShopCar({user_id:app.globalData.openid}).then((e)=>{
-          that.getShopCar()
-        })
-      }
-      
+    wx.navigateTo({
+      url: "/pages/order/index?shopCar=true&sumPrice="+this.data.sumPrice+"&shopCarCount="+this.data.shopCarCount
     })
-
   },
 
   //封装的函数
   getShopCar(){
+
     getAllShopCar({"user_id":app.globalData.openid}).then((e)=>{
       console.log("getAllShopCar",e.data.userCartbyprops)
       this.setData({
         allGoods:e.data.userCartbyprops
       })
-      let sum=0;
+
+      let sum=0,shopCarCount=0;
       e.data.userCartbyprops.map((item)=>{
         sum+=item.count*item.product_id.price
+        shopCarCount+=item.count
       })
 
       console.log(sum)
       this.setData({
-        sumPrice:sum*100
+        sumPrice:sum*100,
+        shopCarCount
       })
+
+      console.log("shopCarCount",shopCarCount)
     })
 
   },
