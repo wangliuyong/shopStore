@@ -10,23 +10,12 @@ var gql = GraphQL({
 
 let createProductOrder=function(data){
     return gql.mutate({
-        mutation:`mutation createOrderproduct($remark: String, $updatedAt: String, $unit: String!, $product_id: String!, $orderPay: Float!, $createdAt: String!, $productImg: String, $productName: String, $order_id: String!, $productPrice: Float, $id: ID!, $count: Int!, $productPay: Float, $user_id: String!, $orderPay_id: String) {
-            createOrderproduct: create_orderProduct(remark: $remark updatedAt: $updatedAt unit: $unit product_id: $product_id orderPay: $orderPay createdAt: $createdAt productImg: $productImg productName: $productName order_id: $order_id productPrice: $productPrice id: $id count: $count productPay: $productPay user_id: $user_id orderPay_id: $orderPay_id) {
+        mutation:`mutation createorderProduct($remark: String, $updatedAt: String, $unit: String, $product_id: ID, $orderPay: Float, $createdAt: String, $order_id: ID, $id: ID!, $count: Int, $productPay: Float, $user_id: String) {
+            createorderProduct: create_orderProduct(remark: $remark updatedAt: $updatedAt unit: $unit product_id: $product_id orderPay: $orderPay createdAt: $createdAt order_id: $order_id id: $id count: $count productPay: $productPay user_id: $user_id) {
                 remark
                 updatedAt
                 unit
-                orderPay {
-                    id
-                    user_id
-        
-                    totalPay
-                    transactionId
-                    payTime
-                }
-                createdAt
-                productImg
-                productName
-                product {
+                product_id {
                     category
                     updatedAt
                     unit
@@ -39,26 +28,27 @@ let createProductOrder=function(data){
                     img
                     stock
                 }
-                productPrice
-                id
-                count
-                productPay
-                user_id
-                order {
+                orderPay
+                createdAt
+                order_id {
                     deliveryTime
                     updatedAt
+        
                     payTime
-        
-        
                     orderTotalPay
                     createdAt
                     orderStatus
+        
                     id
                     orderShipFee
                     count
                     user_id
                     productTotalPay
                 }
+                id
+                count
+                productPay
+                user_id
             }
         }`,
         variables:data 
@@ -71,12 +61,48 @@ let createProductOrder=function(data){
 
 let createOrder=function(data){
   return gql.mutate({
-      mutation:`mutation createorder($deliveryTime: String, $updatedAt: String, $orderLogistics_id: String, $payTime: String, $orderTotalPay: Float!, $createdAt: String!, $orderStatus: String!, $id: ID!, $orderShipFee: Float, $count: Int!, $user_id: String!, $productTotalPay: Float!, $orderPay_id: String!) {
-        createorder: create_order(deliveryTime: $deliveryTime updatedAt: $updatedAt orderLogistics_id: $orderLogistics_id payTime: $payTime orderTotalPay: $orderTotalPay createdAt: $createdAt orderStatus: $orderStatus id: $id orderShipFee: $orderShipFee count: $count user_id: $user_id productTotalPay: $productTotalPay orderPay_id: $orderPay_id) {
+      mutation:`mutation createorder($deliveryTime: String, $updatedAt: String, $orderLogistics_id: ID, $payTime: String, $orderTotalPay: Float, $createdAt: String, $orderStatus: String, $userAddress_id: ID, $id: ID!, $orderShipFee: Float, $count: Int, $user_id: String, $productTotalPay: Float, $orderPay_id: ID) {
+        createorder: create_order(deliveryTime: $deliveryTime updatedAt: $updatedAt orderLogistics_id: $orderLogistics_id payTime: $payTime orderTotalPay: $orderTotalPay createdAt: $createdAt orderStatus: $orderStatus userAddress_id: $userAddress_id id: $id orderShipFee: $orderShipFee count: $count user_id: $user_id productTotalPay: $productTotalPay orderPay_id: $orderPay_id) {
             deliveryTime
             updatedAt
+            orderLogistics_id {
+                updatedAt
+                logisticsFee
+                expressId
+                createdAt
+    
+                consigneeTel
+                id
+                consignAddress
+                LogisticsStatus
+                user_id
+                consigneeName
+            }
             payTime
-            orderPay {
+            orderTotalPay
+            createdAt
+            orderStatus
+            userAddress_id {
+                address
+                updatedAt
+                telephone
+                default
+                city
+                username
+                postcode
+                createdAt
+                deletedAt
+                id
+                user_id
+                area
+                province
+            }
+            id
+            orderShipFee
+            count
+            user_id
+            productTotalPay
+            orderPay_id {
                 id
                 user_id
     
@@ -84,27 +110,6 @@ let createOrder=function(data){
                 transactionId
                 payTime
             }
-            orderLogistics {
-                updatedAt
-                logisticsFee
-                expressId
-                createdAt
-                consigneeTel
-                id
-                consignAddress
-                LogisticsStatus
-                user_id
-    
-                consigneeName
-            }
-            orderTotalPay
-            createdAt
-            orderStatus
-            id
-            orderShipFee
-            count
-            user_id
-            productTotalPay
         }
     }`,
       variables:data 
@@ -113,24 +118,136 @@ let createOrder=function(data){
     })
 }
 
-let getOrderProduct=function(data){
+let getOrder=function(data){
     return gql.query({
-        query: `query orderProductByProps($remark: String, $updatedAt: String, $unit: String, $product_id: String, $orderPay: Float, $createdAt: String, $productImg: String, $productName: String, $order_id: String, $productPrice: Float, $count: Int, $productPay: Float, $user_id: String, $orderPay_id: String) {
-            orderProductByProps: orderProduct_by_props(remark: $remark updatedAt: $updatedAt unit: $unit product_id: $product_id orderPay: $orderPay createdAt: $createdAt productImg: $productImg productName: $productName order_id: $order_id productPrice: $productPrice count: $count productPay: $productPay user_id: $user_id orderPay_id: $orderPay_id) {
-                remark
+        query: `query orderbyprops($deliveryTime: String, $updatedAt: String, $orderLogistics_id: ID, $payTime: String, $orderTotalPay: Float, $createdAt: String, $orderStatus: String, $userAddress_id: ID, $orderShipFee: Float, $count: Int, $user_id: String, $productTotalPay: Float, $orderPay_id: ID) {
+            orderbyprops: order_by_props(deliveryTime: $deliveryTime updatedAt: $updatedAt orderLogistics_id: $orderLogistics_id payTime: $payTime orderTotalPay: $orderTotalPay createdAt: $createdAt orderStatus: $orderStatus userAddress_id: $userAddress_id orderShipFee: $orderShipFee count: $count user_id: $user_id productTotalPay: $productTotalPay orderPay_id: $orderPay_id) {
+                deliveryTime
                 updatedAt
-                unit
-                orderPay {
+                orderLogistics_id {
+                    updatedAt
+                    logisticsFee
+                    expressId
+                    createdAt
+        
+                    consigneeTel
+                    id
+                    consignAddress
+                    LogisticsStatus
+                    user_id
+                    consigneeName
+                }
+                payTime
+                orderTotalPay
+                createdAt
+                orderStatus
+                userAddress_id {
+                    address
+                    updatedAt
+                    telephone
+                    default
+                    city
+                    username
+                    postcode
+                    createdAt
+                    deletedAt
                     id
                     user_id
+                    area
+                    province
+                }
+                id
+                orderShipFee
+                count
+                user_id
+                productTotalPay
+                orderPay_id {
+                    id
+                    user_id
+        
                     totalPay
                     transactionId
                     payTime
                 }
+            }
+        }`,
+        variables: data
+      }).then((res) => {
+        return res
+      }).catch((error) => {
+        return error
+      })
+}
+
+let getOrderById=function(data){
+    return gql.query({
+        query: `query orderbyid($id: ID) {
+            orderbyid: order_by_id(id: $id) {
+                deliveryTime
+                updatedAt
+                orderLogistics_id {
+                    updatedAt
+                    logisticsFee
+                    expressId
+                    createdAt
+        
+                    consigneeTel
+                    id
+                    consignAddress
+                    LogisticsStatus
+                    user_id
+                    consigneeName
+                }
+                payTime
+                orderTotalPay
                 createdAt
-                productImg
-                productName
-                product {
+                orderStatus
+                userAddress_id {
+                    address
+                    updatedAt
+                    telephone
+                    default
+                    city
+                    username
+                    postcode
+                    createdAt
+                    deletedAt
+                    id
+                    user_id
+                    area
+                    province
+                }
+                id
+                orderShipFee
+                count
+                user_id
+                productTotalPay
+                orderPay_id {
+                    id
+                    user_id
+        
+                    totalPay
+                    transactionId
+                    payTime
+                }
+            }
+        }`,
+        variables: data
+      }).then((res) => {
+        return res
+      }).catch((error) => {
+        return error
+      })
+}
+
+let getOrderProduct=function(data){
+    return gql.query({
+        query: `query orderProductbyprops($remark: String, $updatedAt: String, $unit: String, $product_id: ID, $orderPay: Float, $createdAt: String, $order_id: ID, $count: Int, $productPay: Float, $user_id: String) {
+            orderProductbyprops: orderProduct_by_props(remark: $remark updatedAt: $updatedAt unit: $unit product_id: $product_id orderPay: $orderPay createdAt: $createdAt order_id: $order_id count: $count productPay: $productPay user_id: $user_id) {
+                remark
+                updatedAt
+                unit
+                product_id {
                     category
                     updatedAt
                     unit
@@ -143,26 +260,27 @@ let getOrderProduct=function(data){
                     img
                     stock
                 }
-                productPrice
-                id
-                count
-                productPay
-                user_id
-                order {
+                orderPay
+                createdAt
+                order_id {
                     deliveryTime
                     updatedAt
+        
                     payTime
-        
-        
                     orderTotalPay
                     createdAt
                     orderStatus
+        
                     id
                     orderShipFee
                     count
                     user_id
                     productTotalPay
                 }
+                id
+                count
+                productPay
+                user_id
             }
         }`,
         variables: data
@@ -172,8 +290,95 @@ let getOrderProduct=function(data){
         return error
       })
 }
+
+let updateOrder=function(data){
+    return gql.mutate({
+        mutation:`mutation updateorder($deliveryTime: String, $updatedAt: String, $orderLogistics_id: ID, $payTime: String, $orderTotalPay: Float, $createdAt: String, $orderStatus: String, $userAddress_id: ID, $id: ID, $orderShipFee: Float, $count: Int, $user_id: String, $productTotalPay: Float, $orderPay_id: ID) {
+            updateorder: update_order(deliveryTime: $deliveryTime updatedAt: $updatedAt orderLogistics_id: $orderLogistics_id payTime: $payTime orderTotalPay: $orderTotalPay createdAt: $createdAt orderStatus: $orderStatus userAddress_id: $userAddress_id id: $id orderShipFee: $orderShipFee count: $count user_id: $user_id productTotalPay: $productTotalPay orderPay_id: $orderPay_id) {
+                deliveryTime
+                updatedAt
+                orderLogistics_id {
+                    updatedAt
+                    logisticsFee
+                    expressId
+                    createdAt
+        
+                    consigneeTel
+                    id
+                    consignAddress
+                    LogisticsStatus
+                    user_id
+                    consigneeName
+                }
+                payTime
+                orderTotalPay
+                createdAt
+                orderStatus
+                userAddress_id {
+                    address
+                    updatedAt
+                    telephone
+                    default
+                    city
+                    username
+                    postcode
+                    createdAt
+                    deletedAt
+                    id
+                    user_id
+                    area
+                    province
+                }
+                id
+                orderShipFee
+                count
+                user_id
+                productTotalPay
+                orderPay_id {
+                    id
+                    user_id
+        
+                    totalPay
+                    transactionId
+                    payTime
+                }
+            }
+        }`,
+        variables:data 
+      }).then((e)=>{
+        return e
+      })
+}
+
+
+let deleteOrder=function(data){
+    return gql.mutate({
+        mutation:`mutation deleteorder($deliveryTime: String, $updatedAt: String, $orderLogistics_id: ID, $payTime: String, $orderTotalPay: Float, $createdAt: String, $orderStatus: String, $userAddress_id: ID, $id: ID, $orderShipFee: Float, $count: Int, $user_id: String, $productTotalPay: Float, $orderPay_id: ID) {
+            deleteorder: delete_order(deliveryTime: $deliveryTime updatedAt: $updatedAt orderLogistics_id: $orderLogistics_id payTime: $payTime orderTotalPay: $orderTotalPay createdAt: $createdAt orderStatus: $orderStatus userAddress_id: $userAddress_id id: $id orderShipFee: $orderShipFee count: $count user_id: $user_id productTotalPay: $productTotalPay orderPay_id: $orderPay_id)
+        }`,
+        variables:data 
+      }).then((e)=>{
+        return e
+      })
+}
+
+let deleteOrderProduct=function(data){
+    return gql.mutate({
+        mutation:`mutation deleteorderProduct($remark: String, $updatedAt: String, $unit: String, $product_id: ID, $orderPay: Float, $createdAt: String, $order_id: ID, $id: ID, $count: Int, $productPay: Float, $user_id: String) {
+            deleteorderProduct: delete_orderProduct(remark: $remark updatedAt: $updatedAt unit: $unit product_id: $product_id orderPay: $orderPay createdAt: $createdAt order_id: $order_id id: $id count: $count productPay: $productPay user_id: $user_id)
+        }`,
+        variables:data 
+      }).then((e)=>{
+        return e
+      })
+}
 export default {
   createProductOrder,
   createOrder,
-  getOrderProduct
+  getOrder,
+  updateOrder,
+  deleteOrder,
+  getOrderById,
+  getOrderProduct,
+  deleteOrderProduct
 }

@@ -16,6 +16,7 @@ Page({
   },
   onShow:function(){
      //发送请求,获取用户联系人地址列表
+
   },
   addrss(){
     wx.navigateTo({
@@ -25,12 +26,10 @@ Page({
   //封装函数
   getAddress(data){
     userAddressByProps(data).then((e)=>{
-      console.log(e.data.userAddressByProps)
+      console.log(e.data.userAddressbyprops)
       this.setData({
-        allAddress:e.data.userAddressByProps
+        allAddress:e.data.userAddressbyprops
       })
-
-      
     })
   }
 })

@@ -24,7 +24,6 @@ Page({
     show:false,
     selecCount:1
   },
-
   onLoad: function(option) {
 
     this.setData({
@@ -38,12 +37,10 @@ Page({
         good:e.data.product_by_id
       })
     })
-    //option.id=2//测试用,记得删除
-    
   },
+
   onShow(){
-    console.log('detail')
-    
+    console.log('detail')  
   },
   countChange(e){
     this.setData({
@@ -51,6 +48,7 @@ Page({
     })
     console.log(this.data)
   },
+
   onShowPay(){
     console.log("去支付")
     this.setData({
@@ -82,9 +80,7 @@ Page({
         icon: 'success',
         duration: 1000
       })
-    })
-      
-    
+    }) 
   },
   onClickToCar(){
     wx.switchTab({

@@ -77,6 +77,8 @@ Page({
       createUserAddress(this.data.addressData).then((e)=>{
         console.log('createAddress',e)
       })
+
+      
     }else{
       wx.showToast({
         title: '内容不能为空',

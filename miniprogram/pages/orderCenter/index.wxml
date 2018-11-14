@@ -15,30 +15,24 @@
         <view class="ddhead">
               <text class="ddhao">订单号：{{item.id}}</text>
               <text class="state">
-                    <block wx:if="{{item.status == '0'}}"> 未支付 </block>
-                    <block wx:elif="{{item.status == '1'}}"> 已支付 </block>
-                    <block wx:else > 已支付 </block> 
+                    <block wx:if="{{item.orderStatus == '0'}}"> 未支付 </block>
+                    <block wx:elif="{{item.orderStatus == '1'}}"> 已支付 </block> 
               </text>
         </view>
-
-        <!-- <block wx:for="{{item.product}}" wx:key="index"> -->
+        <block wx:for="{{item.product}}" wx:key="index">
             <view class="ddimg">
-                <image src="{{item.product.img}}" class="img"/>
-                <view class="name">{{item.product.name}}</view>
+                <image src="{{item.img}}" class="img"/>
+                <view class="name">{{item.name}}</view>
             </view>
-       <!--  </block> -->
-
+        </block>
         <view class="ddfooter">
-        
             <text class="jr">订单金额：</text>
-            <text class="jr">￥{{item.orderPay}} </text>
+            <text class="jr">￥{{item.orderTotalPay}}</text>
             <text class="jr">数量:</text>
             <text class="jr">x{{item.count}}</text>
-            <view wx:if = "{{item.status == 0}}">
-                    <view class="btn" id="{{item.id}}" bindtap="pay">去支付</view>
-            </view> 
-            <view wx:if = "{{item.status == 0}}">
-                    <view class="btn cancel" id="{{item.id}}" bindtap="cancelOrder">取消订单</view>
+            <view wx:if = "{{item.orderStatus == 0}}">
+                  <view class="btn cancel" id="{{item.id}}" bindtap="deleteOrder">取消订单</view>
+                  <view class="btn cancel" id="{{item.id}}" bindtap="toPay">去支付</view>
             </view>
         </view>
 

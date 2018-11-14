@@ -4,17 +4,26 @@
   <van-cell-group bind:tap="toAdd">
   <van-cell title="{{defaultAddress.username+defaultAddress.telephone+defaultAddress.address+defaultAddress.province+defaultAddress.city+defaultAddress.area+defaultAddress.address}}" icon="location" is-link />
   </van-cell-group>
-
-  <view wx:if="{{shopCar}}">
-    <van-card num="{{order.selectCount}}" price="{{order.good.price}}" title="{{order.good.name}}" thumb="{{ order.good.img }}">
-    <view slot="footer">总计1件商品;合计:￥{{order.good.price*order.selectCount}}</view>
-    </van-card>
+  <view wx:if="{{option.id}}">
+    <view wx:if="{{shopCar}}">
+      <van-card num="{{order.selectCount}}" price="{{order.good.price}}" title="{{order.good.name}}" thumb="{{ order.good.img }}">
+      <view slot="footer">总计1件商品;合计:￥{{order.good.price*order.selectCount}}</view>
+      </van-card>
+    </view>
+    
+    <view wx:if="{{!(shopCar)}}">
+      <van-card num="{{order.selectCount}}" price="{{order.good.price}}" title="{{order.good.name}}" thumb="{{ order.good.img }}">
+      <view slot="footer">总计{{order.selectCount}}件商品;合计:￥{{order.good.price*order.selectCount}}</view>
+      </van-card>
+    </view>
   </view>
 
-  <view wx:if="{{!(shopCar)}}">
-    <van-card num="{{order.selectCount}}" price="{{order.good.price}}" title="{{order.good.name}}" thumb="{{ order.good.img }}">
-    <view slot="footer">总计1件商品;合计:￥{{order.good.price*order.selectCount}}</view>
-    </van-card>
+  <view wx:if="{{option.orderId}}">
+    <view wx:for="{{orderArr}}" wx:key="index">
+      <van-card num="{{item.count}}" price="{{(item.product_id.price)}}" title="{{item.product_id.name}}" thumb="{{ item.product_id.img }}">
+      <view slot="footer">总计{{item.count}}件商品;合计:￥{{item.orderPay}}</view>
+      </van-card>
+    </view>
   </view>
 
 

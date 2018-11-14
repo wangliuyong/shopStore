@@ -5,12 +5,11 @@ import product from '../../common/goods'
 import address from '../../common/address'
 import order from '../../common/order'
 
-
 //let {goods}=data
 let {payRuqest}=pay
 let {getProductById}=product
-let {getUserAddressByUser_id}=address
-let {createProductOrder,createOrder}=order
+let {userAddressByProps}=address
+let {createProductOrder,createOrder,getOrderProduct,getOrder,getOrderById,updateOrder}=order
 
 const app = getApp()
 
@@ -24,9 +23,19 @@ Page({
     shopCar:true,
     //
     message:"",
-    sumPrice:0
+    sumPrice:0,
+    option:{},
+    orderArr:[]
   },
   onLoad: function(option){
+    this.setData({
+      option:option
+    })
+    console.log("option",option)
+    if(option.orderId){
+      this.getOrderByIds({order_id:option.orderId})
+    }
+
     if(option.user_id){
 
     }
@@ -39,8 +48,7 @@ Page({
     
   },
   onShow(){
-    this.getAddressUserId(app.globalData.openid)
-    
+    this.getAddressUserId({"user_id":app.globalData.openid})
   },
   change(e){
     this.setData({
@@ -49,7 +57,13 @@ Page({
     console.log("e",e,"this data",this.data.message)
   },
   onSubmit(){
-    this.createAllOrder()
+    let option=this.data.option
+    if(option.id){
+      this.createAllOrder()
+    }else{
+      this.updateOrderById(option)
+    }
+    
   },
   toAdd(){
     wx.navigateTo({
@@ -57,6 +71,23 @@ Page({
     })
   },
   //封装的函数
+  updateOrderById(option){
+    let that=this,
+        needPay=that.data.sumPrice,
+        openid=app.globalData.openid;
+    //支付
+    payRuqest(needPay,openid,(data)=>{
+      console.log('res',data)
+      if(data==1){
+        //支付成功
+        let payTime=new Date().toLocaleDateString().split("/").join("-")+' '+new Date().toLocaleTimeString().slice(2)
+        updateOrder({id:option.orderId,orderStatus:"1",payTime}).then((e)=>{
+          console.log('更新成功',e)
+          //跳转
+        })
+      }
+    })
+  },
   getGoodById(option){
     getProductById(option.id).then((e) => {
       console.log(e.data.product_by_id)
@@ -71,124 +102,107 @@ Page({
 
     }) 
   },
-  getAddressUserId(id){
+  getAddressUserId(data){
     let that=this
-    getUserAddressByUser_id(id).then((e)=>{
-      console.log("getUserAddressByUser_id",e)
-      let address=e.data.userAddress_by_props
+    userAddressByProps(data).then((e)=>{
+      console.log("userAddressByProps",e)
+      let address=e.data.userAddressbyprops
 
       console.log("address",address)
       address=address.filter((item)=>{
         return item.default==1
       })
+
+
       that.setData({
-        defaultAddress:address[0]
+        defaultAddress:address[0]||''
       }) 
+
     })
   },
   createAllOrder(){
-    let that =this
-    console.log("this.data.order.good",this.data.order.good)
-    let needPay=this.data.order.good.price*this.data.order.selectCount*100,
-        openid=app.globalData.openid,
-        orderID=new Date().getTime(),
-        count=that.data.order.selectCount,
-        creaatAt=new Date().toLocaleDateString().split("/").join("-")+' '+new Date().toLocaleTimeString().slice(2),
-        productPay=that.data.order.good.price *that.data.order.selectCount,
-        id=new Date().getTime()
-
-    console.log('needPay',needPay,'openid',openid)
-    console.log("this.data",that.data)
+    let that=this,
+        needPay=that.data.sumPrice,
+        openid=app.globalData.openid;
+    //支付
     payRuqest(needPay,openid,(data)=>{
       console.log('res',data)
       if(data==1){
         //支付成功
-        //支付成功之后发送请求存入数据库
-        console.log('存入数据库')
-        //订单产品信息
-        let ProductOrdedata={
-          "count": count,
-          "createdAt":creaatAt ,
-          "id": id,
-          "orderPay": needPay/100,
-          "order_id": orderID,
-          "orderPay_id": "finishPay",
-          "productImg": that.data.order.good.img,
-          "productName": that.data.order.good.name,
-          "productPay": productPay,
-          "productPrice": that.data.order.good.price,
-          "product_id": that.data.order.good.id,
-          "remark": that.data.message,
-          "unit": "200",
-          "user_id": openid
-        }
-
-        console.log("orderData",ProductOrdedata)
-        createProductOrder(ProductOrdedata).then((e)=>{
-          console.log("createProductOrder",e)
-        })
-
-
-        let orderData = {
-          "count": count,
-          "createdAt": creaatAt,
-          "id": id,
-          "orderPay_id": "finishPay",
-          "orderStatus": "1",
-          "orderTotalPay": needPay/100,
-          "productTotalPay": productPay,
-          "user_id": openid
-        }
-
-        createOrder(orderData).then((e)=>{
-          console.log("createOrder",e)
-        })
-          
+        let payTime=new Date().toLocaleDateString().split("/").join("-")+' '+new Date().toLocaleTimeString().slice(2)
+        that.createOrder({orderStatus:"1",payTime})
       }else{
-        //订单产品信息
-        let ProductOrdedata={
-          "count": count,
-          "createdAt":creaatAt ,
-          "id": id,
-          "orderPay": needPay/100,
-          "order_id": orderID,
-          "orderPay_id": "waitPay",
-          "productImg": that.data.order.good.img,
-          "productName": that.data.order.good.name,
-          "productPay": productPay,
-          "productPrice": that.data.order.good.price,
-          "product_id": that.data.order.good.id,
-          "remark": that.data.message,
-          "unit": "200",
-          "user_id": openid
-        }
-
-        console.log("orderData",ProductOrdedata)
-        createProductOrder(ProductOrdedata).then((e)=>{
-          console.log("createProductOrder",e)
-        })
-
-
-        
-        let orderData = {
-          "count": count,
-          "createdAt": creaatAt,
-          "id": id,
-          "orderPay_id": "waitPay",
-          "orderStatus": "0",
-          "orderTotalPay": needPay/100,
-          "productTotalPay": productPay,
-          "user_id": openid
-        }
-
-
-        createOrder(orderData).then((e)=>{
-          console.log("createOrder",e)
-        })
-
-
+        //支付不成功
+        //创建一个订单
+        let payTime=new Date().toLocaleDateString().split("/").join("-")+' '+new Date().toLocaleTimeString().slice(2)
+        that.createOrder({orderStatus:"0",payTime})
       }
     })
+  },
+  getOrderByIds(data){
+    getOrderProduct(data).then((e)=>{
+      console.log("getOrderProduct",e.data.orderProductbyprops)
+      this.setData({
+        orderArr:e.data.orderProductbyprops
+      })
+      this.setData({
+        sumPrice: e.data.orderProductbyprops[0].order_id.orderTotalPay
+      })
+      console.log("e.data.orderProductbyprops.order_id[0]",e.data.orderProductbyprops[0].order_id.orderTotalPay)
+      console.log("data",this.data)
+    })
+  },
+  createOrder(data){
+    let that =this,
+    {orderStatus,payTime}=data
+    console.log("this.data.order.good",this.data.order.good)
+    
+    let id=new Date().getTime()+parseInt(Math.random(),10),
+           openid=app.globalData.openid
+    let orderData = {
+      "count": that.data.order.selectCount,
+      "createdAt": new Date().toLocaleDateString().split("/").join("-")+' '+new Date().toLocaleTimeString().slice(2),
+      "deliveryTime": "",
+      "id": id,
+      "orderLogistics_id": "",
+      "orderPay_id": "546455464456",
+      "orderShipFee": 0,
+      "orderStatus": orderStatus,
+      "orderTotalPay": that.data.sumPrice/100,
+      "payTime": payTime,
+      "productTotalPay": that.data.order.good.price *that.data.order.selectCount,
+      "updatedAt": "",
+      "userAddress_id": that.data.defaultAddress.id,
+      "user_id": openid
+    }
+    createOrder(orderData).then((e) => {
+      console.log('创建订单成功', e)
+    })
+
+
+    let productData = {
+      "count": that.data.order.selectCount,
+      "createdAt": new Date().toLocaleDateString().split("/").join("-")+' '+new Date().toLocaleTimeString().slice(2),
+      "id": id+"product",
+      "orderPay": 10,
+      "order_id": id,
+      "productPay": that.data.order.good.price *that.data.order.selectCount,
+      "product_id": that.data.order.good.id,
+      "remark": that.data.message,
+      "unit": "100",
+      "updatedAt": "",
+      "user_id": openid
+    }
+
+    console.log("productData",productData)
+    
+    createProductOrder(productData).then((e)=>{
+      console.log("创建订单产品信息成功",e)
+    })
+
+
+
+
+
   }
-  
 })

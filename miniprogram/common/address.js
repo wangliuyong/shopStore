@@ -10,24 +10,23 @@ var gql = GraphQL({
 
 let createUserAddress=function(data){
     return gql.mutate({
-        mutation:`mutation createUserAddress($address: String!,$area: String!,$city: String!,$default: Int,$deleteddAt: String,$id: ID!,$postcode: String,
-            $province: String!,$telephone: String!,$updatedAt: String,$user_id: String!,$username: String!){
-        create_userAddress(address:$address,area:$area,city:$city,default:$default,deleteddAt:$deleteddAt,id:$id,postcode:$postcode,
-        province:$province,telephone:$telephone,updatedAt:$updatedAt,user_id:$user_id,username:$username){
-        address
-        area
-        city
-        createdAt
-        default
-        deleteddAt
-        id
-        postcode
-        province
-        telephone
-        updatedAt
-        user_id
-        username
-        }
+        mutation:`mutation createuserAddress($address: String, $updatedAt: String, $telephone: String, $default: Int, $city: String, $username: String, $postcode: String, $createdAt: String, $deletedAt: String, $id: ID!, $user_id: String, $area: String, $province: String) {
+            createuserAddress: create_userAddress(address: $address updatedAt: $updatedAt telephone: $telephone
+                default: $default city: $city username: $username postcode: $postcode createdAt: $createdAt deletedAt: $deletedAt id: $id user_id: $user_id area: $area province: $province) {
+                address
+                updatedAt
+                telephone
+                default
+                city
+                username
+                postcode
+                createdAt
+                deletedAt
+                id
+                user_id
+                area
+                province
+            }
         }`,
         variables:data 
       }).then((e)=>{
@@ -37,22 +36,24 @@ let createUserAddress=function(data){
 
 let getUserAddressByUser_id=function(userId){
     return gql.query({
-        query:`query getUserAddressByUser_id($user_id: String){
-            userAddress_by_props(user_id:$user_id){
-              address
-              area
-              city
-              createdAt
-              default
-              id
-              postcode
-              province
-              telephone
-              updatedAt
-              user_id
-              username
+        query:`query userAddressbyprops($address: String, $updatedAt: String, $telephone: String, $default: Int, $city: String, $username: String, $postcode: String, $createdAt: String, $deletedAt: String, $user_id: String, $area: String, $province: String) {
+            userAddressbyprops: userAddress_by_props(address: $address updatedAt: $updatedAt telephone: $telephone
+                default: $default city: $city username: $username postcode: $postcode createdAt: $createdAt deletedAt: $deletedAt user_id: $user_id area: $area province: $province) {
+                address
+                updatedAt
+                telephone
+                default
+                city
+                username
+                postcode
+                createdAt
+                deletedAt
+                id
+                user_id
+                area
+                province
             }
-          }`,
+        }`,
         variables:{
             user_id:userId
         }
@@ -63,9 +64,9 @@ let getUserAddressByUser_id=function(userId){
 
 let userAddressByProps=function(data){
     return gql.query({
-        query:`query userAddressByProps($address: String, $updatedAt: String, $telephone: String, $default: Int, $city: String, $username: String, $postcode: String, $user_id: String, $area: String, $deleteddAt: String, $province: String) {
-            userAddressByProps: userAddress_by_props(address: $address updatedAt: $updatedAt telephone: $telephone
-                default: $default city: $city username: $username postcode: $postcode user_id: $user_id area: $area deleteddAt: $deleteddAt province: $province) {
+        query:`query userAddressbyprops($address: String, $updatedAt: String, $telephone: String, $default: Int, $city: String, $username: String, $postcode: String, $createdAt: String, $deletedAt: String, $user_id: String, $area: String, $province: String) {
+            userAddressbyprops: userAddress_by_props(address: $address updatedAt: $updatedAt telephone: $telephone
+                default: $default city: $city username: $username postcode: $postcode createdAt: $createdAt deletedAt: $deletedAt user_id: $user_id area: $area province: $province) {
                 address
                 updatedAt
                 telephone
@@ -74,10 +75,10 @@ let userAddressByProps=function(data){
                 username
                 postcode
                 createdAt
+                deletedAt
                 id
                 user_id
                 area
-                deleteddAt
                 province
             }
         }`,
