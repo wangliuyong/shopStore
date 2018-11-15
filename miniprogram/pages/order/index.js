@@ -30,7 +30,7 @@ Page({
     orderArr:[]
   },
   onLoad: function(option){
-
+    this.getAddressUserId({"user_id":app.globalData.openid})
     this.setData({
       option:option
     })
@@ -120,12 +120,10 @@ Page({
     userAddressByProps(data).then((e)=>{
       console.log("userAddressByProps",e)
       let address=e.data.userAddressbyprops
-
       console.log("address",address)
       address=address.filter((item)=>{
         return item.default==1
       })
-
       that.setData({
         defaultAddress:address[0]||''
       }) 
@@ -133,7 +131,6 @@ Page({
     })
   },
   createAllOrder(){
-   
     let that=this,
         needPay=10,
         openid=app.globalData.openid;

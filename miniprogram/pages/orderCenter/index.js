@@ -12,7 +12,7 @@ Page({
     logged: false,
     takeSession: false,
     requestResult: '',
-    orderList:"",
+    orderList:[],
     product:[]
   },
 
@@ -24,7 +24,6 @@ Page({
     this.getOrderByUserId({user_id:app.globalData.openid})
   },
   toPay(e){
-    
     //去支付
     wx.navigateTo({
       url: '/pages/order/index?orderId='+e.target.id
@@ -38,14 +37,14 @@ Page({
   deleteOrder(e){
     let that=this
     console.log(e.target.id)
-
+    //删除订单
     deleteOrder({id:e.target.id}).then((e)=>{
       that.getOrderByUserId({user_id:app.globalData.openid})
     })
+    //同时删除订单产品信息表
     deleteOrderProduct({order_id:e.target.id}).then((e)=>{
       that.getOrderByUserId({user_id:app.globalData.openid})
     })
-    
   },
   //封装的函数
   getOrderByUserId(data){
@@ -66,10 +65,10 @@ Page({
     })
   },
   setOrderData(orderArr){
+    console.log("orderArr",orderArr)
     this.setData({
       "orderList":orderArr
     })
-
     console.log("this.data.orderList",this.data.orderList)
   }
 })

@@ -64,6 +64,10 @@ Page({
     })
 
     let save=true,addData=this.data.addressData
+    
+    if(addData.telephone.length<11){
+      save=false
+    }
     for(let key in addData){
       console.log('this.data.addressData[key]',addData)
       if(addData[key].length==''||addData[key]==null){
@@ -76,12 +80,17 @@ Page({
       //提交数据,要修改
       createUserAddress(this.data.addressData).then((e)=>{
         console.log('createAddress',e)
+        wx.showToast({
+          title: '新建地址成功',
+          icon: 'success',
+          duration: 1000
+        })
       })
 
       
     }else{
       wx.showToast({
-        title: '内容不能为空',
+        title: '数据为空或格式不正确',
         icon: 'none',
         duration: 1000
       })

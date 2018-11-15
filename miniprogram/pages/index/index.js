@@ -44,6 +44,9 @@ Page({
       url: '/pages/detail/index?id='+e.currentTarget.id
     }) 
   },
+  onSearch(){
+    
+  },
   //封装函数
   categoricalData(e){
     console.log('product',e.data.product_by_props)
