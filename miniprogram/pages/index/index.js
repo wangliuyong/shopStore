@@ -1,14 +1,11 @@
 //index.js
-import img from '../../common/slide'
-//import data from '../../data'
+
 import product from '../../common/goods'
 
 
 
 let {getProductByProps}=product
-//let {goods}=data
 
-let {getSlideImg}=img
 const app = getApp()
 
 Page({
@@ -16,25 +13,20 @@ Page({
     slideShow:[],
     logged: false,
     search:"",
-    //伪造数据
     goods:[],
     magazine:[],
     fruit:[],
     allGoods:[]
   },
   onLoad: function() {
-    this.getProduct({status:'1'})
-  },
-  onShow(){
     
   },
-  onSearch(e){
-    console.log(e)
-    console.log(this.data)
+  onShow(){
+    //页面显示后获取产品
+    this.getProduct({status:'1'})
   },
   clickTab(e){
     console.log(e)
-    
   },
   clickGood(e){
     console.log(e.currentTarget.id)
@@ -52,17 +44,23 @@ Page({
         product=item.goods
       }
     })
-
     console.log(product)
     product.map((item)=>{
-     
       if(item.name.indexOf(value)!=-1){
         console.log(item.name)
         name=item.name
+        this.setData({
+          search:name
+        })
+        this.getProduct({name})
       }
     })
-
-
+  },
+  onCancel(){
+    this.getProduct({data:'1'})
+    this.setData({
+      search:""
+    })
   },
   //封装函数
   getProduct(data){
@@ -75,11 +73,9 @@ Page({
 
     console.log('product',e.data.productbyprops)
     let category=[];
-    e.productbyprops.map((item)=>{
+    e.data.productbyprops.map((item)=>{
       category.push(item.category)
     })
-
-
     category=Array.from(new Set(category))
     console.log("category",category)
     let allGoods=[];
@@ -87,12 +83,12 @@ Page({
     
     allGoods.push({
       category:"所有果品",
-      goods:e.data.product_by_props
+      goods:e.data.productbyprops
     })
     category.map((it)=>{
       let hash={}
       hash["category"]=it;
-      hash.goods=e.data.product_by_props.filter((item)=>{
+      hash.goods=e.data.productbyprops.filter((item)=>{
         return item.category==it
       })
       allGoods.push(hash)

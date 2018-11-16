@@ -64,6 +64,7 @@ Page({
       that.setOrderData(orderArr)
     })
   },
+  //更新用户订单数据
   setOrderData(orderArr){
     console.log("orderArr",orderArr)
     this.setData({
