@@ -136,8 +136,8 @@ Page({
         openid=app.globalData.openid;
         console.log(that.data.sumPrice,app.globalData.openid)
     //支付
-
     console.log(needPay,openid)
+    console.log('-----------------------------------')
     payRuqest(needPay,openid,(data)=>{
       console.log('res',data)
       if(data==1){
@@ -151,6 +151,7 @@ Page({
         that.createOrders({orderStatus:"0",payTime})
       }
     })
+    
   },
   getOrderByIds(data){
     getOrderProduct(data).then((e)=>{

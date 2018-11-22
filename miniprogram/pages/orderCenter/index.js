@@ -12,7 +12,7 @@ Page({
     logged: false,
     takeSession: false,
     requestResult: '',
-    orderList:[],
+    orderList:[{product:[{product_id:{}}]}],
     product:[]
   },
 
@@ -57,18 +57,20 @@ Page({
       for(let i=0;i<orderArr.length;i++){
         getOrderProduct({order_id:orderArr[i].id}).then((e)=>{
           console.log('getOrderProduct',e.data.orderProductbyprops)
-          orderArr[i].product_id=e.data.orderProductbyprops
+          orderArr[i].product=e.data.orderProductbyprops
         })
       }
       console.log(orderArr)
       that.setOrderData(orderArr)
+      console.log("this.data.orderList1",this.data.orderList)
     })
   },
   //更新用户订单数据
   setOrderData(orderArr){
     console.log("orderArr",orderArr)
     this.setData({
-      "orderList":orderArr
+      orderList:orderArr,
+      //product:orderArr.product
     })
     console.log("this.data.orderList",this.data.orderList)
   }

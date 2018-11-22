@@ -395,7 +395,7 @@ let updateOrder=function(data){
 
 let deleteOrder=function(data){
     return gql.mutate({
-        mutation:`mutation deleteorder($deliveryTime: String, $updatedAt: String, $orderLogistics_id: ID, $payTime: String, $orderTotalPay: Float, $createdAt: String, $orderStatus: String, $userAddress_id: ID, $id: ID, $orderShipFee: Float, $count: Int, $user_id: String, $productTotalPay: Float, $orderPay_id: ID) {
+        mutation:`mutation deleteorder($deliveryTime: String, $updatedAt: String, $orderLogistics_id: ID, $payTime: String, $orderTotalPay: Float, $createdAt: String, $orderStatus: String, $userAddress_id: ID, $id: ID, $orderShipFee: Float, $count: Int, $user_id: ID, $productTotalPay: Float, $orderPay_id: ID) {
             deleteorder: delete_order(deliveryTime: $deliveryTime updatedAt: $updatedAt orderLogistics_id: $orderLogistics_id payTime: $payTime orderTotalPay: $orderTotalPay createdAt: $createdAt orderStatus: $orderStatus userAddress_id: $userAddress_id id: $id orderShipFee: $orderShipFee count: $count user_id: $user_id productTotalPay: $productTotalPay orderPay_id: $orderPay_id)
         }`,
         variables:data 
@@ -408,7 +408,7 @@ let deleteOrder=function(data){
 
 let deleteOrderProduct=function(data){
     return gql.mutate({
-        mutation:`mutation deleteorderProduct($remark: String, $updatedAt: String, $unit: String, $product_id: ID, $orderPay: Float, $createdAt: String, $order_id: ID, $id: ID, $count: Int, $productPay: Float, $user_id: String) {
+        mutation:`mutation deleteorderProduct($remark: String, $updatedAt: String, $unit: String, $product_id: ID, $orderPay: Float, $createdAt: String, $order_id: ID, $id: ID, $count: Int, $productPay: Float, $user_id: ID) {
             deleteorderProduct: delete_orderProduct(remark: $remark updatedAt: $updatedAt unit: $unit product_id: $product_id orderPay: $orderPay createdAt: $createdAt order_id: $order_id id: $id count: $count productPay: $productPay user_id: $user_id)
         }`,
         variables:data 

@@ -2,7 +2,7 @@ import configs from '../configs'
 let {config}=configs
 
 var payRuqest=function(needPay,openid,fn) {
-    let tradeNo = new Date().getTime();
+    let tradeNo = new Date().getTime()+parseInt(Math.random()*10000,10);
       //向后端请求数据
       wx.request({
         url: config.HTTP_PAY_URL,
@@ -31,7 +31,6 @@ var payRuqest=function(needPay,openid,fn) {
               'signType': signType,
               'paySign': paySign,
               'success': function (res) {
-                
                 fn(1)
               },
               'fail': function (res) {

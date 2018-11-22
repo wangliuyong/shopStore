@@ -21,8 +21,8 @@
         </view>
         <block wx:for="{{item.product}}" wx:key="index">
             <view class="ddimg">
-                <image src="{{item.img}}" class="img"/>
-                <view class="name">{{item.name}}</view>
+                <image src="{{item.product_id.img}}" class="img"/>
+                <view class="name">{{item.product_id.name}}</view>
             </view>
         </block>
         <view class="ddfooter">

@@ -2,7 +2,7 @@
 
     <radio-group class="radio-group" catchchange="radioChange">
         <view wx:for="{{allAddress}}" wx:key="{{item.id}}" class="item">
-                <radio  value="{{item.id}}" checked="{{item.isfirst == 1}}"/>
+                <radio  value="{{item.id}}" checked="{{item.default==1}}"/>
                 <view class="right" catchtap="addto" data-id="{{item.id}}">
                     <text class="h1">{{item.username}}</text>
                     <text class="p">{{item.telephone}}</text>
